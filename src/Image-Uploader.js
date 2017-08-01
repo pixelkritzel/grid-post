@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { DropTarget } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import store from './stores';
 import { observer } from 'mobx-react';
-
-console.log(NativeTypes);
 
 const spec = {};
 
@@ -28,6 +25,7 @@ class App extends Component {
   componentWillReceiveProps(nextProps) {
     const { didDrop, item } = nextProps;
     if (didDrop) {
+      console.log(item);
       item.files.forEach(image => {
         const reader = new FileReader();
         reader.onload = e => {
@@ -47,7 +45,7 @@ class App extends Component {
       <div className="App">
         <p className={classNames.join(' ')}>DropHere</p>
         {store.images.map((image, index) => {
-          return <img src={image.dataUrl} key={index} />;
+          return <img alt="" src={image.dataUrl} key={index} />;
         })}
       </div>
     );
