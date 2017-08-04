@@ -5,6 +5,7 @@ import store from './stores';
 
 import ResourcesList from './Resources-List';
 import ImageUploader from './Image-Uploader';
+import Document from './Document';
 
 class App extends React.Component {
   render() {
@@ -17,7 +18,7 @@ class App extends React.Component {
               onDragOver={event => event.preventDefault()}
               onDrop={event => console.log('drop', store.draggedResource)}
             >
-              Here will be the layout!
+              <Document />
             </div>
             <div className="col-4">
               <ImageUploader>
