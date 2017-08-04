@@ -6,19 +6,19 @@ import { observer } from 'mobx-react';
 import { FileReaderEvent } from './helpers/FileReaderEvent';
 
 import store from './stores';
-import { ResourceType } from './stores/resource-model';
+import { ResourceImageType } from './stores/resource-model';
 
 function readFileListToImages(fileList: File[]) {
   fileList.forEach((file: File) => {
     if (file && (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.gif'))) {
-      const image: ResourceType = {
+      const image: ResourceImageType = {
         type: 'image',
         dataUrl: ''
       };
       const reader = new FileReader();
       reader.onload = (e: FileReaderEvent) => {
         image.dataUrl = e.target.result;
-        store.addImage(image);
+        store.addResource(image);
       };
 
       reader.readAsDataURL(file);
@@ -63,7 +63,9 @@ class ImageUploader extends React.Component {
 
   render() {
     const classNames = ['image-uploader'];
-    if (this.isFileDrag) classNames.push('image-uploader--hover');
+    if (this.isFileDrag) {
+      classNames.push('image-uploader--hover');
+    }
     return (
       <div
         className={classNames.join(' ')}

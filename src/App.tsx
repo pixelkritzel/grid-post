@@ -15,9 +15,9 @@ class App extends React.Component {
             <div
               className="col"
               onDragOver={event => event.preventDefault()}
-              onDrop={event => console.log('drop', event.dataTransfer.getData('resource'))}
+              onDrop={event => console.log('drop', store.draggedResource)}
             >
-              Here will be the layout
+              Here will be the layout!
             </div>
             <div className="col-4">
               <ImageUploader>

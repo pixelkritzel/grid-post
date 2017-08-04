@@ -11,9 +11,11 @@ export interface ResourceImageType {
 
 export type ResourceType = ResourceTextType | ResourceImageType;
 
-const resourceModel = types.model({
+const ResourceModel = types.model({
+  cid: types.identifier(),
   type: types.string,
-  dataUrl: types.optional(types.string, '')
+  dataUrl: ''
 });
 
-export default resourceModel;
+export type IResourceModelType = typeof ResourceModel.Type;
+export default ResourceModel;
