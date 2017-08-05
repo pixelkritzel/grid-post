@@ -5,6 +5,7 @@ import ResourceModel, { ResourceType } from './resource-model';
 import post, { PostModel } from './post';
 
 export const DataStoreModel = types.model(
+  'DataStore',
   {
     resources: types.array(ResourceModel),
     post: types.reference(PostModel)

@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 
 import { PostRowModelType } from './stores/post-row';
 
+import PostRowColumn from './Post-Row-Column';
+
 type PostRowProps = {
   key: number;
   postRow: PostRowModelType;
@@ -14,7 +16,7 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
     const resourceCid = event.dataTransfer.getData('resource-cid');
     const { postRow } = this.props;
     if (resourceCid) {
-      postRow.addResource(resourceCid);
+      postRow.addColumn(resourceCid);
     }
   };
   render() {
@@ -22,13 +24,9 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
     return (
       <div className="row" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
         {/* TODO: add key */}
-        {postRow.resources.map(resource => {
-          return (
-            <div className="col">
-              <img src={resource.dataUrl} className="img-fluid" alt={resource.fileName} />
-            </div>
-          );
-        })}
+        {postRow.columns.map((column, index) =>
+          <PostRowColumn key={index} column={column} isDropAble={postRow.columns.length === 2} />
+        )}
       </div>
     );
   }

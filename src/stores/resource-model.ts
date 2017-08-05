@@ -12,7 +12,7 @@ export interface ResourceImageType {
 
 export type ResourceType = ResourceTextType | ResourceImageType;
 
-const ResourceModel = types.model({
+const ResourceModel = types.model('ResourceModel', {
   cid: types.identifier(),
   type: types.string,
   dataUrl: '',
