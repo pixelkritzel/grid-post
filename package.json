@@ -21,6 +21,7 @@
     "@types/react-dnd": "^2.0.33",
     "@types/react-dnd-html5-backend": "^2.1.8",
     "@types/react-dom": "^15.5.1",
+    "mobx-react-devtools": "^4.2.15",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2"
   },

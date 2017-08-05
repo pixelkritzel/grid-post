@@ -1,4 +1,5 @@
 import * as React from 'react';
+import DevTools from 'mobx-react-devtools';
 
 import ResourcesList from './Resources-List';
 import ImageUploader from './Image-Uploader';
@@ -18,6 +19,7 @@ class App extends React.Component {
             </ImageUploader>
           </div>
         </div>
+        <DevTools />
       </div>
     );
   }

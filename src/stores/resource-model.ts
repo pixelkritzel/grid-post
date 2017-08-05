@@ -7,6 +7,7 @@ export interface ResourceTextType {
 export interface ResourceImageType {
   type: string;
   dataUrl: string;
+  fileName: string;
 }
 
 export type ResourceType = ResourceTextType | ResourceImageType;
@@ -14,7 +15,8 @@ export type ResourceType = ResourceTextType | ResourceImageType;
 const ResourceModel = types.model({
   cid: types.identifier(),
   type: types.string,
-  dataUrl: ''
+  dataUrl: '',
+  fileName: ''
 });
 
 export type IResourceModelType = typeof ResourceModel.Type;

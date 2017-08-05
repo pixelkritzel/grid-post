@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 import { IResourceModelType } from './stores/resource-model';
 
@@ -9,6 +10,7 @@ export interface ResourceProps {
   resource: IResourceModelType;
 }
 
+@observer
 class Resource extends React.Component<ResourceProps, {}> {
   render() {
     const { resource } = this.props;

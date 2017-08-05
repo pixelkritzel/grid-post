@@ -7,7 +7,7 @@ interface ResourceTypeImageProps {
 
 export default class ResourceTypeImage extends React.Component<ResourceTypeImageProps, {}> {
   render() {
-    const { dataUrl } = this.props.resource;
-    return <img src={dataUrl} />;
+    const { dataUrl, fileName } = this.props.resource;
+    return <img src={dataUrl} className="img-fluid" alt={fileName} />;
   }
 }

@@ -13,7 +13,8 @@ function readFileListToImages(fileList: File[]) {
     if (file && (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.gif'))) {
       const image: ResourceImageType = {
         type: 'image',
-        dataUrl: ''
+        dataUrl: '',
+        fileName: file.name
       };
       const reader = new FileReader();
       reader.onload = (e: FileReaderEvent) => {

@@ -12,7 +12,7 @@ export default class PostRowDropZone extends React.Component {
 
   render() {
     return (
-      <div className="col" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
+      <div onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
         Drop here
       </div>
     );
