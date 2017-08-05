@@ -16,7 +16,7 @@ export const DataStoreModel = types.model(
   }
 );
 
-const store = DataStoreModel.create({
+const dataStore = DataStoreModel.create({
   resources: [
     ResourceModel.create({
       cid: getId('resource'),
@@ -26,4 +26,4 @@ const store = DataStoreModel.create({
   post: post
 });
 
-export default store;
+export default dataStore;
