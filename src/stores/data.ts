@@ -1,30 +1,29 @@
 import { types } from 'mobx-state-tree';
 
 import getId from '../helpers/getId';
-import ResourceModel, { ResourceType, IResourceModelType } from './resource-model';
+import ResourceModel, { ResourceType } from './resource-model';
+import post, { PostModel } from './post';
 
-export const StoreModel = types.model(
+export const DataStoreModel = types.model(
   {
     resources: types.array(ResourceModel),
-    draggedResource: types.maybe(types.reference(ResourceModel))
+    post: types.reference(PostModel)
   },
   {
     addResource(resource: ResourceType) {
       this.resources.push(ResourceModel.create({ cid: getId('resource'), ...resource }));
-    },
-    setDraggedResource(resource: IResourceModelType) {
-      this.draggedResource = resource;
     }
   }
 );
 
-const store = StoreModel.create({
+const store = DataStoreModel.create({
   resources: [
     ResourceModel.create({
       cid: getId('resource'),
       type: 'text'
     })
-  ]
+  ],
+  post: post
 });
 
 export default store;

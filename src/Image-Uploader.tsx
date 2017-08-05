@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 
 import { FileReaderEvent } from './helpers/FileReaderEvent';
 
-import store from './stores';
+import data from './stores/data';
 import { ResourceImageType } from './stores/resource-model';
 
 function readFileListToImages(fileList: File[]) {
@@ -18,7 +18,7 @@ function readFileListToImages(fileList: File[]) {
       const reader = new FileReader();
       reader.onload = (e: FileReaderEvent) => {
         image.dataUrl = e.target.result;
-        store.addResource(image);
+        data.addResource(image);
       };
 
       reader.readAsDataURL(file);

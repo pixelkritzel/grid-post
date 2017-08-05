@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import store from './stores';
+import uiStore from './stores/ui';
 import { IResourceModelType } from './stores/resource-model';
 
 import ResourceTypeText from './Resource-Type-Text';
@@ -20,7 +20,7 @@ class Resource extends React.Component<ResourceProps, {}> {
       ResourceComponent = ResourceTypeImage;
     }
     return (
-      <div onDragStart={() => store.setDraggedResource(resource)}>
+      <div onDragStart={() => uiStore.setDraggedResource(resource)}>
         {typeof ResourceComponent !== 'undefined' ? <ResourceComponent resource={resource} /> : null}
       </div>
     );
