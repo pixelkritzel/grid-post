@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import { PostRowColumnModelType } from './stores/post-row';
+import getImgSrc from './helpers/get-img-src';
 
 interface PostRowColumnProps {
   key: number;
@@ -26,7 +27,9 @@ export default class PostRow extends React.Component<PostRowColumnProps, {}> {
     const { column } = this.props;
     return (
       <div className="col" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
-        {column.resources.map(resource => <img src={resource.dataUrl} className="img-fluid" alt={resource.fileName} />)}
+        {column.resources.map(resource =>
+          <img src={getImgSrc(resource.path)} className="img-fluid" alt={resource.fileName} />
+        )}
       </div>
     );
   }

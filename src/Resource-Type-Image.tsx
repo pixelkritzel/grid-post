@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ResourceImageType } from './stores/resource-model';
+import getImgSrc from './helpers/get-img-src';
 
 interface ResourceTypeImageProps {
   resource: ResourceImageType;
@@ -7,7 +8,7 @@ interface ResourceTypeImageProps {
 
 export default class ResourceTypeImage extends React.Component<ResourceTypeImageProps, {}> {
   render() {
-    const { dataUrl, fileName } = this.props.resource;
-    return <img src={dataUrl} className="img-fluid" alt={fileName} />;
+    const { path, fileName } = this.props.resource;
+    return <img src={getImgSrc(path)} className="img-fluid" alt={fileName} />;
   }
 }

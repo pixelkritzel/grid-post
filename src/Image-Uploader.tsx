@@ -3,26 +3,22 @@ import './App.css';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { FileReaderEvent } from './helpers/FileReaderEvent';
-
 import data from './stores/data';
 import { ResourceImageType } from './stores/resource-model';
 
+interface FileObjectForElectron extends File {
+  path: string;
+}
+
 function readFileListToImages(fileList: File[]) {
-  fileList.forEach((file: File) => {
+  fileList.forEach((file: FileObjectForElectron) => {
     if (file && (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.gif'))) {
       const image: ResourceImageType = {
         type: 'image',
-        dataUrl: '',
+        path: file.path,
         fileName: file.name
       };
-      const reader = new FileReader();
-      reader.onload = (e: FileReaderEvent) => {
-        image.dataUrl = e.target.result;
-        data.addResource(image);
-      };
-
-      reader.readAsDataURL(file);
+      data.addResource(image);
     }
   });
 }
