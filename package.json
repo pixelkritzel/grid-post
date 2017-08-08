@@ -2,6 +2,8 @@
   "name": "grid-post-ts",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
+  "main": "src/electron-starter.js",
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "mobx": "^3.2.2",
@@ -21,6 +23,7 @@
     "@types/react-dnd": "^2.0.33",
     "@types/react-dnd-html5-backend": "^2.1.8",
     "@types/react-dom": "^15.5.1",
+    "electron": "^1.6.11",
     "mobx-react-devtools": "^4.2.15",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2"
@@ -32,6 +35,8 @@
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts-ts test --env=jsdom",
+    "electron": "node_modules/.bin/electron .",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
     "eject": "react-scripts-ts eject"
   }
 }
