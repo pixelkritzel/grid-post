@@ -22,11 +22,13 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
   render() {
     const { postRow } = this.props;
     return (
-      <div className="row" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
-        {/* TODO: add key */}
-        {postRow.columns.map((column, index) =>
-          <PostRowColumn key={index} column={column} isDropAble={postRow.columns.length === 2} />
-        )}
+      <div className="post-row" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
+        <div className="post-row__content">
+          {/* TODO: add key */}
+          {postRow.columns.map((column, index) =>
+            <PostRowColumn key={index} column={column} isDropAble={postRow.columns.length === 2} />
+          )}
+        </div>
       </div>
     );
   }

@@ -11,7 +11,7 @@ interface PostRowColumnProps {
 }
 
 @observer
-export default class PostRow extends React.Component<PostRowColumnProps, {}> {
+export default class PostRowColumn extends React.Component<PostRowColumnProps, {}> {
   onDrop = (event: React.DragEvent<HTMLDivElement>) => {
     const { column, isDropAble } = this.props;
     if (!isDropAble) {
@@ -26,10 +26,16 @@ export default class PostRow extends React.Component<PostRowColumnProps, {}> {
   render() {
     const { column } = this.props;
     return (
-      <div className="col" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
-        {column.resources.map(resource =>
-          <img src={getImgSrc(resource.path)} className="img-fluid" alt={resource.fileName} />
-        )}
+      <div className="post-row-column" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
+        {column.resources.map(resource => {
+          const style = {
+            backgroundImage: `url(${getImgSrc(resource.path)})`
+          };
+          {
+            /* <img src={getImgSrc(resource.path)} className="img-fluid" alt={resource.fileName} /> */
+          }
+          return <div className="post-row-column__resource" style={style} />;
+        })}
       </div>
     );
   }

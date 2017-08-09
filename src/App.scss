@@ -1,10 +1,36 @@
 @import "bootstrap/scss/bootstrap";
-
+@import "scss/post-row";
 .image-uploader {
-  text-align: center;
-  padding: 40px;
+    position: fixed;
+    @include make-col(4);
+    top: 0;
+    right: 0;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-align: center;
+    padding: 40px;
+    border-left: 1px solid #000;
 }
 
 .image-uploader--hover {
-  background-color: #ccc;
+    background-color: #ccc;
+}
+
+.resource-type-image {
+    position: relative;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    .resource-type-image__toolbar {
+        display: none;
+    }
+    &:hover .resource-type-image__toolbar {
+        display: block;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+    }
+    img {
+        //cursor: move;
+    }
 }

@@ -1,7 +1,12 @@
-import { types } from 'mobx-state-tree';
+// import { observable } from 'mobx';
 
-const UiStoreModel = types.model('UiStore', {}, {});
+// type uiStoreType = {
+//   Overlay: () => JSX.Element | null;
+// };
 
-const uiStore = UiStoreModel.create();
+// const uiStore: uiStoreType = observable({
+//   Overlay: null
+// });
 
+const uiStore = {};
 export default uiStore;
