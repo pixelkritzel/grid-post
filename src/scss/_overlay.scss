@@ -1,16 +1,16 @@
 .overlay-background {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, .7);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .7);
 }
 
 .overlay {
-    padding: 40px;
-    background-color: whitesmoke;
+  padding: 8px;
+  background-color: whitesmoke;
 }

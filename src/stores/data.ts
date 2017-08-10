@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree';
 
 import getId from '../helpers/getId';
-import ResourceModel, { ResourceType } from './resource-model';
+import ResourceModel, { ResourceType, IResourceModelType } from './resource-model';
 import post, { PostModel } from './post';
 
 export const DataStoreModel = types.model(
@@ -13,6 +13,12 @@ export const DataStoreModel = types.model(
   {
     addResource(resource: ResourceType) {
       this.resources.push(ResourceModel.create({ cid: getId('resource'), ...resource }));
+    },
+    removeResource(resource: IResourceModelType) {
+      const indexOfResource = this.resources.indexOf(resource);
+      if (indexOfResource > -1) {
+        this.resources.splice(indexOfResource, 1);
+      }
     }
   }
 );
