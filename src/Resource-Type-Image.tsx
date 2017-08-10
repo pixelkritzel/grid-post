@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ResourceImageType } from './stores/resource-model';
+import uiStore from './stores/ui';
 import getImgSrc from './helpers/get-img-src';
 
 import FaTrash from './icons/FaTrash';
@@ -10,7 +11,11 @@ interface ResourceTypeImageProps {
 }
 
 export default class ResourceTypeImage extends React.Component<ResourceTypeImageProps, {}> {
-  removeImage = () => {};
+  removeImage = () => {
+    uiStore.OverlayContent = () => {
+      return <h1>Hello World</h1>;
+    };
+  };
 
   render() {
     const { path, fileName } = this.props.resource;

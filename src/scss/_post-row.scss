@@ -34,4 +34,9 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  img {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+  }
 }

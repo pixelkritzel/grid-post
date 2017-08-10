@@ -25,17 +25,24 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
   };
   render() {
     const { column } = this.props;
+    const style = {
+      flexBasis: '50%'
+    };
     return (
-      <div className="post-row-column" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
-        {column.resources.map(resource => {
-          const style = {
-            backgroundImage: `url(${getImgSrc(resource.path)})`
-          };
-          {
-            /* <img src={getImgSrc(resource.path)} className="img-fluid" alt={resource.fileName} /> */
-          }
-          return <div className="post-row-column__resource" style={style} />;
-        })}
+      <div style={style}>
+        <div className="post-row-column" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
+          {column.resources.map(resource => {
+            const style = {
+              backgroundImage: `url(${getImgSrc(resource.path)})`
+            };
+
+            return (
+              <div className="post-row-column__resource" style={style}>
+                <img src={getImgSrc(resource.path)} className="img-fluid" alt={resource.fileName} />
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
