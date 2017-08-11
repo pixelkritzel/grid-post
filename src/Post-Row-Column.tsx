@@ -26,7 +26,7 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
   render() {
     const { column } = this.props;
     const style = {
-      flexBasis: '50%'
+      flexBasis: column.width + '%'
     };
     return (
       <div style={style}>

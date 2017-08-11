@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { PostRowModelType } from './stores/post-row';
 
 import PostRowColumn from './Post-Row-Column';
+import PostRowColumnWidthDragger from './Post-Row-Column-Width-Dragger';
 
 type PostRowProps = {
   key: number;
@@ -28,6 +29,7 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
           {postRow.columns.map((column, index) =>
             <PostRowColumn key={index} column={column} isDropAble={postRow.columns.length === 2} />
           )}
+          {postRow.columns.length > 1 ? <PostRowColumnWidthDragger postRow={postRow} /> : null}
         </div>
       </div>
     );
