@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
+import PostRowColumnHeightDragger from './Post-Row-Column-Height-Dragger';
 import { PostRowColumnModelType } from './stores/post-row';
 import getImgSrc from './helpers/get-img-src';
 
@@ -31,17 +32,19 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
     return (
       <div style={style}>
         <div className="post-row-column" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
-          {column.resources.map(resource => {
-            const style = {
-              backgroundImage: `url(${getImgSrc(resource.path)})`
+          {column.contents.map(({ resource, height }) => {
+            const resourceStyle = {
+              backgroundImage: `url(${getImgSrc(resource.path)})`,
+              flexBasis: height + '%'
             };
 
             return (
-              <div className="post-row-column__resource" style={style}>
+              <div className="post-row-column__resource" style={resourceStyle}>
                 <img src={getImgSrc(resource.path)} className="img-fluid" alt={resource.fileName} />
               </div>
             );
           })}
+          {column.contents.length > 1 ? <PostRowColumnHeightDragger column={column} /> : null}
         </div>
       </div>
     );

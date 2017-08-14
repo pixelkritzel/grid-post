@@ -2,7 +2,6 @@ import { types } from 'mobx-state-tree';
 
 import getId from '../helpers/getId';
 
-import dataStore from './data';
 import { PostRowModel, PostRowColumnModel } from './post-row';
 
 export const PostModel = types.model(
@@ -13,17 +12,14 @@ export const PostModel = types.model(
   },
   {
     addRow(droppedResourceId: string) {
-      const droppedResource = dataStore.resources.find(resource => resource.cid.toString() === droppedResourceId);
-      if (droppedResource) {
-        const row = PostRowModel.create({
-          columns: [
-            PostRowColumnModel.create({
-              resources: [droppedResource]
-            })
-          ]
-        });
-        this.rows.push(row);
-      }
+      const newPostRowColumn = PostRowColumnModel.create({
+        contents: []
+      });
+      newPostRowColumn.addResource(droppedResourceId);
+      const row = PostRowModel.create({
+        columns: [newPostRowColumn]
+      });
+      this.rows.push(row);
     }
   }
 );

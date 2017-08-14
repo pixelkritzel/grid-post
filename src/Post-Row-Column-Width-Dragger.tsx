@@ -4,10 +4,7 @@ import { observer } from 'mobx-react';
 import { PostRowModelType } from './stores/post-row';
 
 import getAncestor from './helpers/get-ancestor';
-
-function clamp(num: number, min: number, max: number): number {
-  return num <= min ? min : num >= max ? max : num;
-}
+import clamp from './helpers/clamp';
 
 type PostRowColumnWidthDraggerPropsType = {
   postRow: PostRowModelType;
@@ -15,7 +12,6 @@ type PostRowColumnWidthDraggerPropsType = {
 
 @observer
 export default class PostRowColumnWidthDragger extends React.Component<PostRowColumnWidthDraggerPropsType, {}> {
-  isDragged = false;
   domNode: HTMLDivElement;
 
   onMouseMove = (event: MouseEvent) => {

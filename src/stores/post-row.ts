@@ -3,17 +3,44 @@ import { types, getParent } from 'mobx-state-tree';
 import resourceModel from './resource-model';
 import dataStore from './data';
 
+export const PostRowContentModel = types.model(
+  {
+    resource: types.reference(resourceModel),
+    height: 100
+  },
+  {
+    setHeight(height: number) {
+      const otherContentsHeight = 100 - height;
+      const contents: PostRowContentModelType[] = getParent(this, 1);
+      const indexOfThis = contents.indexOf(this);
+      const otherColumn = contents[indexOfThis + 1];
+      this.height = height;
+      otherColumn.height = otherContentsHeight;
+    }
+  }
+);
+
+export type PostRowContentModelType = typeof PostRowContentModel.Type;
+
 export const PostRowColumnModel = types.model(
   'PostRowColumnModel',
   {
-    resources: types.array(types.reference(resourceModel)),
+    contents: types.array(PostRowContentModel),
     width: 100
   },
   {
     addResource(droppedResourceCid: string) {
       const droppedResource = dataStore.resources.find(resource => resource.cid === droppedResourceCid);
       if (droppedResource) {
-        this.resources.push(droppedResource);
+        this.contents.push(
+          PostRowContentModel.create({
+            resource: droppedResource
+          })
+        );
+        if (this.contents.length === 2) {
+          this.contents[0].height = 50;
+          this.contents[1].height = 50;
+        }
       }
     },
     setWidth(width: number) {
@@ -36,14 +63,12 @@ export const PostRowModel = types.model(
   },
   {
     addColumn(droppedResourceCid: string) {
-      const droppedResource = dataStore.resources.find(resource => resource.cid === droppedResourceCid);
-      if (droppedResource) {
-        this.columns.push(
-          PostRowColumnModel.create({
-            resources: [droppedResource]
-          })
-        );
-      }
+      const newPostRowColumn = PostRowColumnModel.create({
+        contents: []
+      });
+      newPostRowColumn.addResource(droppedResourceCid);
+      this.columns.push(newPostRowColumn);
+
       if (this.columns.length === 2) {
         this.columns[0].width = 50;
         this.columns[1].width = 50;
