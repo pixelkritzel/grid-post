@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as React from 'react';
 import * as Icon from 'react-icon-base';
 

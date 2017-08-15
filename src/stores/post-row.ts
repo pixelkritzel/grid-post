@@ -59,7 +59,11 @@ export type PostRowColumnModelType = typeof PostRowColumnModel.Type;
 export const PostRowModel = types.model(
   'PostRowModel',
   {
-    columns: types.array(PostRowColumnModel)
+    columns: types.array(PostRowColumnModel),
+    width: 16,
+    height: 9,
+    marginBottom: 8,
+    marginBottomUnit: 'px'
   },
   {
     addColumn(droppedResourceCid: string) {
@@ -73,6 +77,18 @@ export const PostRowModel = types.model(
         this.columns[0].width = 50;
         this.columns[1].width = 50;
       }
+    },
+    setWidth(width: number) {
+      this.width = width;
+    },
+    setHeight(height: number) {
+      this.height = height;
+    },
+    setMarginBottom(marginBottom: number) {
+      this.marginBottom = marginBottom;
+    },
+    setMarginBottomUnit(unit: string) {
+      this.marginBottomUnit = unit;
     }
   }
 );

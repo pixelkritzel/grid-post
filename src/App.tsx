@@ -2,10 +2,11 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 
-import ResourcesList from './Resources-List';
+import Edit from './Edit';
 import ImageUploader from './Image-Uploader';
-import Post from './Post';
 import Overlay from './Overlay';
+import Post from './Post';
+import ResourcesList from './Resources-List';
 
 import uiStore from './stores/ui';
 
@@ -25,9 +26,11 @@ class App extends React.Component {
             <Post />
           </div>
           <div className="col-4">
-            <ImageUploader>
-              <ResourcesList />
-            </ImageUploader>
+            {uiStore.EditForm
+              ? <Edit EditForm={uiStore.EditForm} />
+              : <ImageUploader>
+                  <ResourcesList />
+                </ImageUploader>}
           </div>
         </div>
         {uiStore.OverlayContent

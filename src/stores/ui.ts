@@ -1,15 +1,17 @@
 import { observable, IObservableObject } from 'mobx';
 
-interface OverlayFunction {
+export interface FunctionalComponent {
   (): JSX.Element;
 }
 
 type uiStoreType = {
-  OverlayContent: OverlayFunction | null;
+  OverlayContent: FunctionalComponent | null;
+  EditForm: FunctionalComponent | null;
 } & IObservableObject;
 
 const uiStore: uiStoreType = observable({
-  OverlayContent: null
+  OverlayContent: null,
+  EditForm: null
 });
 
 export default uiStore;
