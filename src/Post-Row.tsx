@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { PostRowModelType } from './stores/post-row';
 import uiStore from './stores/ui';
 
+import FaClose from './icons/FaClose';
 import FaPencil from './icons/FaPencil';
 import PostRowColumn from './Post-Row-Column';
 import PostRowColumnWidthDragger from './Post-Row-Column-Width-Dragger';
@@ -115,6 +116,9 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
         <aside className="post-row__toolbar btn-group">
           <button type="button" title={``} className="btn btn-secondary" onClick={() => this.renderEditForm(postRow)}>
             <FaPencil />
+          </button>
+          <button type="button" title={``} className="btn btn-danger" onClick={() => postRow.destroy()}>
+            <FaClose />
           </button>
         </aside>
       </div>

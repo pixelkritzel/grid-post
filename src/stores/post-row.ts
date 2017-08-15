@@ -78,6 +78,13 @@ export const PostRowModel = types.model(
         this.columns[1].width = 50;
       }
     },
+    destroy() {
+      const postRows: PostRowModelType[] = getParent(this);
+      if (postRows) {
+        const indexOfThisPostRow = postRows.indexOf(this);
+        postRows.splice(indexOfThisPostRow, 1);
+      }
+    },
     setWidth(width: number) {
       this.width = width;
     },
