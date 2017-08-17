@@ -6,7 +6,11 @@ import dataStore from './data';
 export const PostRowContentModel = types.model(
   {
     resource: types.reference(resourceModel),
-    height: 100
+    height: 100,
+    marginTop: '0px',
+    marginRight: '0px',
+    marginBottom: '0px',
+    marginLeft: '0px'
   },
   {
     setHeight(height: number) {
