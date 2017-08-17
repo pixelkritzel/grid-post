@@ -1,5 +1,6 @@
 let id = 0;
 
 export default function getId(prefix: string = '') {
-  return prefix ? `${prefix}-${id++}` : id++;
+  const timestampedId = `${new Date().getTime()}-${id++}`;
+  return prefix ? `${prefix}-${timestampedId}` : timestampedId;
 }
