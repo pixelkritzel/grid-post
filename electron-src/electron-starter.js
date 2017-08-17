@@ -2,6 +2,12 @@ const createServer = require('./server');
 createServer();
 
 const electron = require('electron');
+
+electron.ipcMain.on('synchronous-message', (event, arg) => {
+  console.log(arg); // prints "ping"
+  event.returnValue = 'pong';
+});
+
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
