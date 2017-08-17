@@ -1,4 +1,4 @@
-import { types, onAction } from 'mobx-state-tree';
+import { onAction, types } from 'mobx-state-tree';
 
 import getId from '../helpers/getId';
 import ResourceModel, { ResourceType, IResourceModelType } from './resource-model';
@@ -33,6 +33,17 @@ const dataStore = DataStoreModel.create({
   post: post
 });
 
-onAction(dataStore, console.log);
+const electron = window['require']('electron');
+onAction(dataStore, () => {
+  const syncedResourcesIds = JSON.parse(
+    electron.ipcRenderer.sendSync('resources', JSON.stringify(dataStore.resources))
+  );
+  syncedResourcesIds.forEach((syncedResourceId: string) => {
+    const syncedResource = dataStore.resources.find(resource => resource.cid === syncedResourceId);
+    if (syncedResource) {
+      syncedResource.isSynced = true;
+    }
+  });
+});
 
 export default dataStore;

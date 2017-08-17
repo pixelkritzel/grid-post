@@ -5,9 +5,6 @@ import App from './App';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
-const electron = window['require']('electron');
-console.log(electron.ipcRenderer.sendSync('synchronous-message', 'ping'));
-
 document.addEventListener('dragover', event => event.preventDefault());
 document.addEventListener('drop', event => event.preventDefault());
 

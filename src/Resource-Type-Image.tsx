@@ -55,24 +55,28 @@ export default class ResourceTypeImage extends React.Component<ResourceTypeImage
 
   render() {
     const { resource } = this.props;
-    const { path, fileName } = resource;
-    return (
-      <div className="resource-type-image">
-        <aside className="resource-type-image__toolbar btn-group">
-          <button
-            type="button"
-            title={`Remove picture ${fileName} from project`}
-            className="btn btn-secondary"
-            onClick={() => this.removeImage(resource)}
-          >
-            <FaTrash />
-          </button>
-          <button type="button" title={`Edit picture data for ${fileName}`} className="btn btn-secondary">
-            <FaPencil />
-          </button>
-        </aside>
-        <img src={getImgSrc(path)} className="img-fluid" alt={fileName} />
-      </div>
-    );
+    const { cid, fileName, isSynced } = resource;
+    if (isSynced) {
+      return (
+        <div className="resource-type-image">
+          <aside className="resource-type-image__toolbar btn-group">
+            <button
+              type="button"
+              title={`Remove picture ${fileName} from project`}
+              className="btn btn-secondary"
+              onClick={() => this.removeImage(resource)}
+            >
+              <FaTrash />
+            </button>
+            <button type="button" title={`Edit picture data for ${fileName}`} className="btn btn-secondary">
+              <FaPencil />
+            </button>
+          </aside>
+          <img src={getImgSrc(cid.toString())} className="img-fluid" alt={fileName} />
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 }

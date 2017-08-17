@@ -43,13 +43,17 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
               marginBottom: content.marginBottom,
               marginLeft: content.marginLeft,
               height: `calc(100% - ${content.marginTop} - ${content.marginBottom})`,
-              backgroundImage: `url(${getImgSrc(content.resource.path)})`
+              backgroundImage: `url(${getImgSrc(content.resource.cid.toString())})`
             };
 
             return (
               <div style={resourceStyle} key={index}>
                 <div className="post-row-column__resource" style={backgroundImage}>
-                  <img src={getImgSrc(content.resource.path)} className="img-fluid" alt={content.resource.fileName} />
+                  <img
+                    src={getImgSrc(content.resource.cid.toString())}
+                    className="img-fluid"
+                    alt={content.resource.fileName}
+                  />
                 </div>
               </div>
             );

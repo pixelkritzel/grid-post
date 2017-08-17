@@ -7,6 +7,7 @@ export interface ResourceTextType {
 export interface ResourceImageType {
   type: string;
   path: string;
+  isSynced: boolean;
   fileName: string;
 }
 
@@ -16,6 +17,7 @@ const ResourceModel = types.model('ResourceModel', {
   cid: types.identifier(),
   type: types.string,
   path: '',
+  isSynced: false,
   fileName: ''
 });
 

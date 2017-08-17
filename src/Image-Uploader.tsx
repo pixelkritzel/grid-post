@@ -16,7 +16,8 @@ function readFileListToImages(fileList: File[]) {
       const image: ResourceImageType = {
         type: 'image',
         path: file.path,
-        fileName: file.name
+        fileName: file.name,
+        isSynced: false
       };
       data.addResource(image);
     }
