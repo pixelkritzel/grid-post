@@ -1,4 +1,4 @@
-import { types, onPatch } from 'mobx-state-tree';
+import { types, onAction } from 'mobx-state-tree';
 
 import getId from '../helpers/getId';
 import ResourceModel, { ResourceType, IResourceModelType } from './resource-model';
@@ -33,6 +33,6 @@ const dataStore = DataStoreModel.create({
   post: post
 });
 
-onPatch(dataStore, console.log);
+onAction(dataStore, console.log);
 
 export default dataStore;
