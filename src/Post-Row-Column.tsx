@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 import PostRowColumnHeightDragger from './Post-Row-Column-Height-Dragger';
@@ -8,22 +9,28 @@ import getImgSrc from './helpers/get-img-src';
 interface PostRowColumnProps {
   key: number;
   column: PostRowColumnModelType;
-  isDropAble: boolean;
 }
 
 @observer
 export default class PostRowColumn extends React.Component<PostRowColumnProps, {}> {
-  onDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    const { column, isDropAble } = this.props;
-    if (!isDropAble) {
-      return;
-    }
-    event.stopPropagation();
-    const resourceCid = event.dataTransfer.getData('resource-cid');
+  @observable dragCounter = 0;
+  @computed
+  get isDropTarget() {
+    const { column } = this.props;
+    return this.dragCounter !== 0 && column.isExtendable;
+  }
+
+  addResource = (resourceCid: string | undefined, position: number) => {
+    const { column } = this.props;
     if (resourceCid) {
-      column.addResource(resourceCid);
+      column.addResource(resourceCid, position);
     }
   };
+
+  incrementDragCounter = () => this.dragCounter++;
+
+  decrementDragCounter = () => this.dragCounter--;
+
   render() {
     const { column } = this.props;
     const style = {
@@ -31,7 +38,13 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
     };
     return (
       <div style={style}>
-        <div className="post-row-column" onDragOver={event => event.preventDefault()} onDrop={this.onDrop}>
+        <div
+          className="post-row-column"
+          onDragOver={event => event.preventDefault()}
+          onDragEnter={this.incrementDragCounter}
+          onDragLeave={this.decrementDragCounter}
+          onDrop={() => (this.dragCounter = 0)}
+        >
           {column.contents.map((content, index) => {
             const resourceStyle = {
               flexBasis: content.height + '%'
@@ -59,6 +72,24 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
             );
           })}
           {column.contents.length > 1 ? <PostRowColumnHeightDragger column={column} /> : null}
+          {this.isDropTarget
+            ? <div
+                className="post-row-column__drop-top"
+                onDrop={event => this.addResource(event.dataTransfer.getData('resource-cid'), 0)}
+                title="Drop top"
+              >
+                +
+              </div>
+            : null}
+          {this.isDropTarget
+            ? <div
+                className="post-row-column__drop-bottom"
+                onDrop={event => this.addResource(event.dataTransfer.getData('resource-cid'), 1)}
+                title="Drop bottom"
+              >
+                +
+              </div>
+            : null}
         </div>
       </div>
     );

@@ -15,7 +15,7 @@ export const PostModel = types.model(
       const newPostRowColumn = PostRowColumnModel.create({
         contents: []
       });
-      newPostRowColumn.addResource(droppedResourceId);
+      newPostRowColumn.addResource(droppedResourceId, 0);
       const row = PostRowModel.create({
         columns: [newPostRowColumn]
       });

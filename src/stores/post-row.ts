@@ -30,13 +30,18 @@ export const PostRowColumnModel = types.model(
   'PostRowColumnModel',
   {
     contents: types.array(PostRowContentModel),
-    width: 100
+    width: 100,
+    get isExtendable() {
+      return this.contents.length < 2;
+    }
   },
   {
-    addResource(droppedResourceCid: string) {
+    addResource(droppedResourceCid: string, position: number) {
       const droppedResource = dataStore.resources.find(resource => resource.cid === droppedResourceCid);
       if (droppedResource) {
-        this.contents.push(
+        this.contents.splice(
+          position,
+          0,
           PostRowContentModel.create({
             resource: droppedResource
           })
@@ -67,15 +72,18 @@ export const PostRowModel = types.model(
     width: 16,
     height: 9,
     marginBottom: 8,
-    marginBottomUnit: 'px'
+    marginBottomUnit: 'px',
+    get isExtendable() {
+      return this.columns.length < 2;
+    }
   },
   {
-    addColumn(droppedResourceCid: string) {
+    addColumn(droppedResourceCid: string, position: number) {
       const newPostRowColumn = PostRowColumnModel.create({
         contents: []
       });
-      newPostRowColumn.addResource(droppedResourceCid);
-      this.columns.push(newPostRowColumn);
+      newPostRowColumn.addResource(droppedResourceCid, 0);
+      this.columns.splice(position, 0, newPostRowColumn);
 
       if (this.columns.length === 2) {
         this.columns[0].width = 50;

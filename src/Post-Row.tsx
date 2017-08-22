@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { PostRowModelType } from './stores/post-row';
@@ -17,13 +17,17 @@ type PostRowProps = {
 
 @observer
 export default class PostRow extends React.Component<PostRowProps, {}> {
-  @observable isHover = false;
+  @observable dragCounter = 0;
+  @computed
+  get isDropTarget() {
+    const { postRow } = this.props;
+    return this.dragCounter !== 0 && postRow.isExtendable;
+  }
 
-  onDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    const resourceCid = event.dataTransfer.getData('resource-cid');
+  addColumn = (resourceCid: string | undefined, position: number) => {
     const { postRow } = this.props;
     if (resourceCid) {
-      postRow.addColumn(resourceCid);
+      postRow.addColumn(resourceCid, position);
     }
   };
 
@@ -88,6 +92,10 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
     };
   };
 
+  incrementDragCounter = () => this.dragCounter++;
+
+  decrementDragCounter = () => this.dragCounter--;
+
   render() {
     const { postRow } = this.props;
     const postRowStyle = {
@@ -100,17 +108,17 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
       <div
         className="post-row"
         style={postRowStyle}
-        onDragOver={event => event.preventDefault()}
-        onDrop={this.onDrop}
-        onMouseEnter={() => (this.isHover = true)}
-        onMouseLeave={() => (this.isHover = false)}
+        onDragOver={event => {
+          event.preventDefault();
+        }}
+        onDragEnter={this.incrementDragCounter}
+        onDragLeave={this.decrementDragCounter}
+        onDrop={() => (this.dragCounter = 0)}
       >
         <div style={postRowRatio} />
         <div className="post-row__content">
           {/* TODO: add key */}
-          {postRow.columns.map((column, index) =>
-            <PostRowColumn key={index} column={column} isDropAble={postRow.columns.length === 2} />
-          )}
+          {postRow.columns.map((column, index) => <PostRowColumn key={index} column={column} />)}
           {postRow.columns.length > 1 ? <PostRowColumnWidthDragger postRow={postRow} /> : null}
         </div>
         <aside className="post-row__toolbar btn-group">
@@ -121,6 +129,24 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
             <FaClose />
           </button>
         </aside>
+        {this.isDropTarget
+          ? <div
+              className="post-row__drop-left"
+              onDrop={event => this.addColumn(event.dataTransfer.getData('resource-cid'), 0)}
+              title="Drop left"
+            >
+              +
+            </div>
+          : null}
+        {this.isDropTarget
+          ? <div
+              className="post-row__drop-right"
+              onDrop={event => this.addColumn(event.dataTransfer.getData('resource-cid'), 1)}
+              title="Drop right"
+            >
+              +
+            </div>
+          : null}
       </div>
     );
   }

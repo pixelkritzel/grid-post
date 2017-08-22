@@ -16,6 +16,39 @@
 .post-row {
   width: 100%;
   position: relative;
+  z-index: 10;
+}
+
+@mixin drop-handler() {
+  background-color: rgba(225, 225, 225, 0.4);
+  border: 2px solid rgba(64, 64, 64, 0.7);
+  color: rgba(64, 64, 64, 0.9);
+  text-align: center;
+  font-size: 4rem;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.post-row__drop-left,
+.post-row__drop-right {
+  @include drop-handler();
+  position: absolute;
+  top: 50%;
+  height: 30%;
+  margin-top: -15%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+.post-row__drop-left {
+  left: 0;
+  border-left: none;
+}
+
+.post-row__drop-right {
+  right: 0;
+  border-right: none;
 }
 
 .post-row__content {
@@ -36,6 +69,25 @@
   flex-grow: 1;
   align-content: stretch;
   height: 100%;
+}
+
+.post-row-column__drop-top,
+.post-row-column__drop-bottom {
+  @include drop-handler();
+  position: absolute;
+  left: 50%;
+  width: 70%;
+  margin-left: -35%;
+}
+
+.post-row-column__drop-top {
+  top: 0;
+  border-top: none;
+}
+
+.post-row-column__drop-bottom {
+  bottom: 0;
+  border-right: none;
 }
 
 .post-row-column-width-dragger {
