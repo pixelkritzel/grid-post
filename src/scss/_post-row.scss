@@ -122,9 +122,31 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    .post-row-column__resource__toolbar {
+      display: block;
+      opacity: 1;
+    }
+  }
+
   img {
     visibility: hidden;
     height: 0;
     width: 0;
   }
+}
+
+.post-row-column__resource__toolbar {
+  opacity: 0;
+  display: none;
+}
+
+.post-row__toolbar {
+  position: absolute;
+  top: 0;
+  left: -60px;
 }

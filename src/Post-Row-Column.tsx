@@ -3,7 +3,11 @@ import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 import PostRowColumnHeightDragger from './Post-Row-Column-Height-Dragger';
-import { PostRowColumnModelType } from './stores/post-row';
+import { PostRowColumnModelType, PostRowContentModelType } from './stores/post-row';
+import FaPencil from './icons/FaPencil';
+import FaClose from './icons/FaClose';
+import FaArrows from './icons/FaArrows';
+
 import getImgSrc from './helpers/get-img-src';
 
 interface PostRowColumnProps {
@@ -45,7 +49,7 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
           onDragLeave={this.decrementDragCounter}
           onDrop={() => (this.dragCounter = 0)}
         >
-          {column.contents.map((content, index) => {
+          {column.contents.map((content: PostRowContentModelType, index: number) => {
             const resourceStyle = {
               flexBasis: content.height + '%'
             };
@@ -67,6 +71,17 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
                     className="img-fluid"
                     alt={content.resource.fileName}
                   />
+                  <aside className="post-row-column__resource__toolbar btn-group">
+                    <button type="button" title={``} className="btn btn-secondary" onClick={console.log}>
+                      <FaArrows />
+                    </button>
+                    <button type="button" title={``} className="btn btn-secondary" onClick={console.log}>
+                      <FaPencil />
+                    </button>
+                    <button type="button" title={``} className="btn btn-danger" onClick={console.log}>
+                      <FaClose />
+                    </button>
+                  </aside>
                 </div>
               </div>
             );

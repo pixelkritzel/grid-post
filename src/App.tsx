@@ -22,7 +22,7 @@ class App extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row" style={appStyle}>
-          <div className="col">
+          <div className="col post-container">
             <Post />
           </div>
           <div className="col-4">

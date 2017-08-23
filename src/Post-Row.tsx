@@ -2,7 +2,7 @@ import * as React from 'react';
 import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { PostRowModelType } from './stores/post-row';
+import { PostRowModelType, PostRowColumnModelType } from './stores/post-row';
 import uiStore from './stores/ui';
 
 import FaClose from './icons/FaClose';
@@ -118,10 +118,12 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
         <div style={postRowRatio} />
         <div className="post-row__content">
           {/* TODO: add key */}
-          {postRow.columns.map((column, index) => <PostRowColumn key={index} column={column} />)}
+          {postRow.columns.map((column: PostRowColumnModelType, index: number) =>
+            <PostRowColumn key={index} column={column} />
+          )}
           {postRow.columns.length > 1 ? <PostRowColumnWidthDragger postRow={postRow} /> : null}
         </div>
-        <aside className="post-row__toolbar btn-group">
+        <aside className="post-row__toolbar btn-group btn-group-vertical">
           <button type="button" title={``} className="btn btn-secondary" onClick={() => this.renderEditForm(postRow)}>
             <FaPencil />
           </button>
