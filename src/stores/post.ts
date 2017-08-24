@@ -5,7 +5,7 @@ import getId from '../helpers/get-id';
 import { PostRowModel, PostRowColumnModel } from './post-row';
 import { IResourceModelType } from './resource-model';
 
-export const PostModel = types.model(
+export default types.model(
   'Post',
   {
     cid: types.identifier(),
@@ -33,10 +33,3 @@ export const PostModel = types.model(
     }
   }
 );
-
-const post = PostModel.create({
-  cid: getId('post'),
-  rows: []
-});
-
-export default post;

@@ -2,13 +2,13 @@ import { onAction, types } from 'mobx-state-tree';
 
 import getId from '../helpers/get-id';
 import ResourceModel, { ResourceType, IResourceModelType } from './resource-model';
-import post, { PostModel } from './post';
+import PostModel from './post';
 
 export const DataStoreModel = types.model(
   'DataStore',
   {
     resources: types.array(ResourceModel),
-    post: types.reference(PostModel)
+    post: PostModel
   },
   {
     addResource(resource: ResourceType) {
@@ -28,12 +28,15 @@ export const DataStoreModel = types.model(
 
 const dataStore = DataStoreModel.create({
   resources: [
-    ResourceModel.create({
+    {
       cid: getId('resource'),
       type: 'text'
-    })
+    }
   ],
-  post: post
+  post: {
+    cid: getId('post'),
+    rows: []
+  }
 });
 
 export type DataStoreType = typeof DataStoreModel.Type;
