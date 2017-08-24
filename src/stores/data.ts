@@ -1,8 +1,27 @@
-import { onAction, types } from 'mobx-state-tree';
+import { onPatch, types } from 'mobx-state-tree';
 
 import getId from '../helpers/get-id';
 import ResourceModel, { ResourceType, IResourceModelType } from './resource-model';
 import PostModel from './post';
+
+const emptyDataStore = {
+  resources: [
+    {
+      cid: getId('resource'),
+      type: 'text'
+    }
+  ],
+  post: {
+    cid: getId('post'),
+    rows: []
+  }
+};
+
+const latestSaveAsString = localStorage.getItem('latest');
+let latestSave;
+if (typeof latestSaveAsString === 'string') {
+  latestSave = JSON.parse(latestSaveAsString);
+}
 
 export const DataStoreModel = types.model(
   'DataStore',
@@ -26,23 +45,12 @@ export const DataStoreModel = types.model(
   }
 );
 
-const dataStore = DataStoreModel.create({
-  resources: [
-    {
-      cid: getId('resource'),
-      type: 'text'
-    }
-  ],
-  post: {
-    cid: getId('post'),
-    rows: []
-  }
-});
+const dataStore = DataStoreModel.create(latestSave || emptyDataStore);
 
 export type DataStoreType = typeof DataStoreModel.Type;
 
 const electron = window['require']('electron');
-onAction(dataStore, () => {
+onPatch(dataStore, () => {
   const syncedResourcesIds = JSON.parse(
     electron.ipcRenderer.sendSync('resources', JSON.stringify(dataStore.resources))
   );
@@ -52,6 +60,11 @@ onAction(dataStore, () => {
       syncedResource.isSynced = true;
     }
   });
+});
+
+onPatch(dataStore, () => {
+  const stringifiedStore = JSON.stringify(dataStore);
+  localStorage.setItem('latest', stringifiedStore);
 });
 
 export default dataStore;
