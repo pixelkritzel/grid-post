@@ -3,6 +3,7 @@ import { types, getParent } from 'mobx-state-tree';
 import resourceModel from './resource-model';
 import dataStore from './data';
 
+type DirectionsType = 'top' | 'right' | 'bottom' | 'left';
 export const PostRowContentModel = types.model(
   {
     resource: types.reference(resourceModel),
@@ -20,6 +21,10 @@ export const PostRowContentModel = types.model(
       const otherColumn = contents[indexOfThis + 1];
       this.height = height;
       otherColumn.height = otherContentsHeight;
+    },
+    setMargin(direction: DirectionsType, value: string) {
+      const key = 'margin' + direction.charAt(0).toUpperCase() + direction.slice(1);
+      this[key] = value;
     }
   }
 );
@@ -68,6 +73,7 @@ export type PostRowColumnModelType = typeof PostRowColumnModel.Type;
 export const PostRowModel = types.model(
   'PostRowModel',
   {
+    cid: types.identifier(),
     columns: types.array(PostRowColumnModel),
     width: 16,
     height: 9,

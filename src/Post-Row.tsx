@@ -2,17 +2,19 @@ import * as React from 'react';
 import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { PostRowModelType, PostRowColumnModelType } from './stores/post-row';
 import uiStore from './stores/ui';
 
-import FaClose from './icons/FaClose';
-import FaPencil from './icons/FaPencil';
 import PostRowColumn from './Post-Row-Column';
 import PostRowColumnWidthDragger from './Post-Row-Column-Width-Dragger';
+import InputGroup from './components/forms/Input-Group';
+import FaClose from './icons/FaClose';
+import FaPencil from './icons/FaPencil';
+
+import { PostRowModelType, PostRowColumnModelType } from './stores/post-row';
 
 type PostRowProps = {
-  key: number;
   postRow: PostRowModelType;
+  index: number;
 };
 
 @observer
@@ -31,59 +33,48 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
     }
   };
 
-  renderEditForm = (postRow: PostRowModelType) => {
+  renderEditForm = (postRow: PostRowModelType, index: number) => {
     uiStore.EditForm = () => {
       return (
         <div>
-          <div className="form-inline">
-            <label htmlFor="post-row-margin-bottom" className="mr-sm-2">
-              Margin Bottom Value
-            </label>
+          <h3>
+            Edit the {index + 1}. post row
+          </h3>
 
-            <input
-              type="number"
-              className="formControl mr-sm-2"
-              id="post-row-margin-bottom"
-              defaultValue={postRow.marginBottom.toString()}
+          <div className="form-inline">
+            <InputGroup
+              identifier="post-row-margin-bottom"
+              labelHtml="Margin Bottom Value"
+              inputType="number"
+              inputValue={postRow.marginBottom.toString()}
               onChange={event => postRow.setMarginBottom(parseFloat(event.target.value))}
             />
 
             {' : '}
-            <label htmlFor="post-row-margin-botto-unit" className="mr-sm-2">
-              Margin Bottom Unit
-            </label>
 
-            <input
-              type="text"
-              className="formControl mr-sm-2"
-              id="post-row-margin-botto-unit"
-              defaultValue={postRow.marginBottomUnit}
+            <InputGroup
+              identifier="post-row-margin-botto-unit"
+              labelHtml=" Margin Bottom Unit"
+              inputType="text"
+              inputValue={postRow.marginBottomUnit}
               onChange={event => postRow.setMarginBottomUnit(event.target.value)}
             />
           </div>
           <div className="form-inline">
-            <label htmlFor="post-row-width" className="mr-sm-2">
-              Width
-            </label>
-
-            <input
-              type="number"
-              className="formControl mr-sm-2"
-              id="post-row-width"
-              defaultValue={postRow.width.toString()}
+            <InputGroup
+              identifier="post-row-width"
+              labelHtml="Width"
+              inputType="number"
+              inputValue={postRow.width.toString()}
               onChange={event => postRow.setWidth(parseFloat(event.target.value))}
             />
 
             {' : '}
-            <label htmlFor="post-row-height" className="mr-sm-2">
-              Height
-            </label>
-
-            <input
-              type="number"
-              className="formControl mr-sm-2"
-              id="post-row-height"
-              defaultValue={postRow.height.toString()}
+            <InputGroup
+              identifier="post-row-height"
+              labelHtml="Height"
+              inputType="number"
+              inputValue={postRow.height.toString()}
               onChange={event => postRow.setHeight(parseFloat(event.target.value))}
             />
           </div>
@@ -97,7 +88,7 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
   decrementDragCounter = () => this.dragCounter--;
 
   render() {
-    const { postRow } = this.props;
+    const { postRow, index: postRowIndex } = this.props;
     const postRowStyle = {
       marginBottom: postRow.marginBottom + postRow.marginBottomUnit
     };
@@ -124,7 +115,12 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
           {postRow.columns.length > 1 ? <PostRowColumnWidthDragger postRow={postRow} /> : null}
         </div>
         <aside className="post-row__toolbar btn-group btn-group-vertical">
-          <button type="button" title={``} className="btn btn-secondary" onClick={() => this.renderEditForm(postRow)}>
+          <button
+            type="button"
+            title={``}
+            className="btn btn-secondary"
+            onClick={() => this.renderEditForm(postRow, postRowIndex)}
+          >
             <FaPencil />
           </button>
           <button type="button" title={``} className="btn btn-danger" onClick={() => postRow.destroy()}>

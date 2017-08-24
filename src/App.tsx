@@ -25,7 +25,7 @@ class App extends React.Component {
           <div className="col post-container">
             <Post />
           </div>
-          <div className="col-4">
+          <div className="col-4 sidebar">
             {uiStore.EditForm
               ? <Edit EditForm={uiStore.EditForm} />
               : <ImageUploader>

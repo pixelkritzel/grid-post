@@ -1,6 +1,6 @@
 import { onAction, types } from 'mobx-state-tree';
 
-import getId from '../helpers/getId';
+import getId from '../helpers/get-id';
 import ResourceModel, { ResourceType, IResourceModelType } from './resource-model';
 import post, { PostModel } from './post';
 
