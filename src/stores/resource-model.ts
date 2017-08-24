@@ -1,5 +1,4 @@
-import { types } from 'mobx-state-tree';
-
+import { getRoot, types } from 'mobx-state-tree';
 export interface ResourceTextType {
   type: string;
 }
@@ -18,7 +17,11 @@ const ResourceModel = types.model('ResourceModel', {
   type: types.string,
   path: '',
   isSynced: false,
-  fileName: ''
+  fileName: '',
+  get isUsed() {
+    const dataStore = getRoot(this);
+    return dataStore.post.resourceIsUsed(this);
+  }
 });
 
 export type IResourceModelType = typeof ResourceModel.Type;

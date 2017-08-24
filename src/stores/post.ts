@@ -3,12 +3,21 @@ import { types } from 'mobx-state-tree';
 import getId from '../helpers/get-id';
 
 import { PostRowModel, PostRowColumnModel } from './post-row';
+import { IResourceModelType } from './resource-model';
 
 export const PostModel = types.model(
   'Post',
   {
     cid: types.identifier(),
-    rows: types.array(PostRowModel)
+    rows: types.array(PostRowModel),
+    resourceIsUsed(resource: IResourceModelType) {
+      const resourceCounter = this.rows.reduce((prev, row) => {
+        return row.columns.reduce((prev, column) => {
+          return column.contents.reduce((prev, content) => (content.resource === resource ? ++prev : prev), prev);
+        }, prev);
+      }, 0);
+      return resourceCounter !== 0;
+    }
   },
   {
     addRow(droppedResourceId: string) {

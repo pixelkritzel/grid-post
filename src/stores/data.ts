@@ -15,6 +15,9 @@ export const DataStoreModel = types.model(
       this.resources.push(ResourceModel.create({ cid: getId('resource'), ...resource }));
     },
     removeResource(resource: IResourceModelType) {
+      if (this.post.resourceIsUsed(resource)) {
+        throw new Error("Can't remove resource because it's used in the post");
+      }
       const indexOfResource = this.resources.indexOf(resource);
       if (indexOfResource > -1) {
         this.resources.splice(indexOfResource, 1);
@@ -32,6 +35,8 @@ const dataStore = DataStoreModel.create({
   ],
   post: post
 });
+
+export type DataStoreType = typeof DataStoreModel.Type;
 
 const electron = window['require']('electron');
 onAction(dataStore, () => {

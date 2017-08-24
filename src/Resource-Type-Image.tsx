@@ -1,16 +1,20 @@
 import * as React from 'react';
-import { IResourceModelType } from './stores/resource-model';
+import { observer } from 'mobx-react';
+
 import uiStore from './stores/ui';
 import dataStore from './stores/data';
-import getImgSrc from './helpers/get-img-src';
 
 import FaTrash from './icons/FaTrash';
 import FaPencil from './icons/FaPencil';
 
+import getImgSrc from './helpers/get-img-src';
+
+import { IResourceModelType } from './stores/resource-model';
 interface ResourceTypeImageProps {
   resource: IResourceModelType;
 }
 
+@observer
 export default class ResourceTypeImage extends React.Component<ResourceTypeImageProps, {}> {
   removeImage = (resource: IResourceModelType) => {
     uiStore.OverlayContent = () => {
@@ -62,8 +66,13 @@ export default class ResourceTypeImage extends React.Component<ResourceTypeImage
           <aside className="resource-type-image__toolbar btn-group">
             <button
               type="button"
-              title={`Remove picture ${fileName} from project`}
+              title={
+                resource.isUsed
+                  ? `Can't remove picture ${fileName}, because it's used in the post`
+                  : `Remove picture ${fileName} from project`
+              }
               className="btn btn-secondary"
+              disabled={resource.isUsed}
               onClick={() => this.removeImage(resource)}
             >
               <FaTrash />
