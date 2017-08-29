@@ -47,24 +47,27 @@ export const DataStoreModel = types.model(
 
 const dataStore = DataStoreModel.create(latestSave || emptyDataStore);
 
-export type DataStoreType = typeof DataStoreModel.Type;
-
 const electron = window['require']('electron');
-onPatch(dataStore, () => {
+
+function sendResourcesToServer() {
   const syncedResourcesIds = JSON.parse(
     electron.ipcRenderer.sendSync('resources', JSON.stringify(dataStore.resources))
   );
   syncedResourcesIds.forEach((syncedResourceId: string) => {
     const syncedResource = dataStore.resources.find(resource => resource.cid === syncedResourceId);
     if (syncedResource) {
-      syncedResource.isSynced = true;
+      syncedResource.setIsSynced(true);
     }
   });
-});
+}
+
+onPatch(dataStore, sendResourcesToServer);
+sendResourcesToServer();
 
 onPatch(dataStore, () => {
   const stringifiedStore = JSON.stringify(dataStore);
   localStorage.setItem('latest', stringifiedStore);
 });
 
+export type DataStoreType = typeof DataStoreModel.Type;
 export default dataStore;

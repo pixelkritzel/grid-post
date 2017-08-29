@@ -10,9 +10,9 @@ const getResources = require('./resources');
 app.use(cors());
 
 app.get('/images', function(req, res) {
-  const { cid } = req.query;
+  const { cid: requestedCid } = req.query;
   const resources = getResources();
-  const resource = resources.find(resource => resource.cid === cid);
+  const resource = resources.find(resource => resource.cid === requestedCid);
   if (resource) {
     res.sendFile(resource.path, err => {
       if (err) {
