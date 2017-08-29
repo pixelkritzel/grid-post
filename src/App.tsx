@@ -4,6 +4,7 @@ import DevTools from 'mobx-react-devtools';
 
 import Edit from './Edit';
 import ImageUploader from './Image-Uploader';
+import Navbar from './components/Navbar';
 import Overlay from './Overlay';
 import Post from './Post';
 import ResourcesList from './Resources-List';
@@ -20,25 +21,30 @@ class App extends React.Component {
       appStyle.filter = 'blur(20px) grayscale(20%)';
     }
     return (
-      <div className="container-fluid">
-        <div className="row" style={appStyle}>
-          <div className="col post-container">
-            <Post />
-          </div>
-          <div className="col-4 sidebar">
-            {uiStore.EditForm
-              ? <Edit EditForm={uiStore.EditForm} />
-              : <ImageUploader>
+      <div className="app">
+        <Navbar />
+        <div className="container-fluid">
+          <div className="row" style={appStyle}>
+            <div className="col post-container">
+              <Post />
+            </div>
+            <div className="col-4 sidebar">
+              {uiStore.EditForm ? (
+                <Edit EditForm={uiStore.EditForm} />
+              ) : (
+                <ImageUploader>
                   <ResourcesList />
-                </ImageUploader>}
+                </ImageUploader>
+              )}
+            </div>
           </div>
-        </div>
-        {uiStore.OverlayContent
-          ? <Overlay>
+          {uiStore.OverlayContent ? (
+            <Overlay>
               <uiStore.OverlayContent />
             </Overlay>
-          : null}
-        <DevTools />
+          ) : null}
+          <DevTools />
+        </div>
       </div>
     );
   }
