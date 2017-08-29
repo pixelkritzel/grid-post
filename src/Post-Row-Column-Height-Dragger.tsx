@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import { PostRowColumnModelType } from './stores/post-row';
+import { PostRowColumnModelType } from './stores/post-row-column';
 
 import getAncestor from './helpers/get-ancestor';
 import clamp from './helpers/clamp';

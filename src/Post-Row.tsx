@@ -10,7 +10,8 @@ import InputGroup from './components/forms/Input-Group';
 import FaClose from './icons/FaClose';
 import FaPencil from './icons/FaPencil';
 
-import { PostRowModelType, PostRowColumnModelType } from './stores/post-row';
+import { PostRowModelType } from './stores/post-row';
+import { PostRowColumnModelType } from './stores/post-row-column';
 
 type PostRowProps = {
   postRow: PostRowModelType;
@@ -37,9 +38,7 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
     uiStore.EditForm = () => {
       return (
         <div>
-          <h3>
-            Edit the {index + 1}. post row
-          </h3>
+          <h3>Edit the {index + 1}. post row</h3>
 
           <div className="form-inline">
             <InputGroup
@@ -108,10 +107,9 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
       >
         <div style={postRowRatio} />
         <div className="post-row__content">
-          {/* TODO: add key */}
-          {postRow.columns.map((column: PostRowColumnModelType, index: number) =>
+          {postRow.columns.map((column: PostRowColumnModelType, index) => (
             <PostRowColumn key={index} column={column} />
-          )}
+          ))}
           {postRow.columns.length > 1 ? <PostRowColumnWidthDragger postRow={postRow} /> : null}
         </div>
         <aside className="post-row__toolbar btn-group btn-group-vertical">
@@ -123,28 +121,36 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
           >
             <FaPencil />
           </button>
-          <button type="button" title={``} className="btn btn-danger" onClick={() => postRow.destroy()}>
+          <button
+            type="button"
+            title={``}
+            className="btn btn-danger"
+            onClick={() => {
+              uiStore.EditForm = null;
+              postRow.remove();
+            }}
+          >
             <FaClose />
           </button>
         </aside>
-        {this.isDropTarget
-          ? <div
-              className="post-row__drop-left"
-              onDrop={event => this.addColumn(event.dataTransfer.getData('resource-cid'), 0)}
-              title="Drop left"
-            >
-              +
-            </div>
-          : null}
-        {this.isDropTarget
-          ? <div
-              className="post-row__drop-right"
-              onDrop={event => this.addColumn(event.dataTransfer.getData('resource-cid'), 1)}
-              title="Drop right"
-            >
-              +
-            </div>
-          : null}
+        {this.isDropTarget ? (
+          <div
+            className="post-row__drop-left"
+            onDrop={event => this.addColumn(event.dataTransfer.getData('resource-cid'), 0)}
+            title="Drop left"
+          >
+            +
+          </div>
+        ) : null}
+        {this.isDropTarget ? (
+          <div
+            className="post-row__drop-right"
+            onDrop={event => this.addColumn(event.dataTransfer.getData('resource-cid'), 1)}
+            title="Drop right"
+          >
+            +
+          </div>
+        ) : null}
       </div>
     );
   }

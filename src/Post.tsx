@@ -12,9 +12,7 @@ export default class Document extends React.Component {
     return (
       <div>
         <h3>Post</h3>
-        {dataStore.post.rows.map((postRow, index) =>
-          <PostRow key={postRow.cid.toString()} postRow={postRow} index={index} />
-        )}
+        {dataStore.post.rows.map((postRow, index) => <PostRow key={index} postRow={postRow} index={index} />)}
         <PostRowDropZone />
       </div>
     );

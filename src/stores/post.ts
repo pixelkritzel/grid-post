@@ -1,8 +1,7 @@
 import { types } from 'mobx-state-tree';
 
-import getId from '../helpers/get-id';
-
-import { PostRowModel, PostRowColumnModel } from './post-row';
+import { PostRowModel } from './post-row';
+import { PostRowColumnModel } from './post-row-column';
 import { IResourceModelType } from './resource-model';
 
 export default types.model(
@@ -26,8 +25,7 @@ export default types.model(
       });
       newPostRowColumn.addResource(droppedResourceId, 0);
       const row = PostRowModel.create({
-        columns: [newPostRowColumn],
-        cid: getId('post-row')
+        columns: [newPostRowColumn]
       });
       this.rows.push(row);
     }
