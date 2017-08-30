@@ -1,6 +1,8 @@
 const createServer = require('./server');
 createServer();
 
+require('./save-store');
+
 const electron = require('electron');
 
 // Module to control application life.

@@ -71,3 +71,15 @@ onPatch(dataStore, () => {
 
 export type DataStoreType = typeof DataStoreModel.Type;
 export default dataStore;
+
+function saveStore(savePath: string) {
+  electron.ipcRenderer.send(
+    'save-store',
+    JSON.stringify({
+      savePath,
+      content: dataStore
+    })
+  );
+}
+
+export { saveStore };
