@@ -58,7 +58,7 @@ export default class ResourceTypeImage extends React.Component<ResourceTypeImage
   render() {
     const { resource } = this.props;
     const { cid, fileName } = resource;
-    if (appStore.syncedResources.indexOf(cid.toString()) !== -1) {
+    if (appStore.syncedResources.includes(cid.toString())) {
       return (
         <div className="resource-type-image">
           <aside className="resource-type-image__toolbar btn-group">
