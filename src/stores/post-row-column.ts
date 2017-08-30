@@ -1,6 +1,6 @@
 import { types, getParent } from 'mobx-state-tree';
 
-import dataStore from './data';
+import appStore from './app';
 import { PostRowModelType } from './post-row';
 import { PostRowContentModel } from './post-row-content';
 
@@ -18,7 +18,7 @@ export const PostRowColumnModel = types.model(
   },
   {
     addResource(droppedResourceCid: string, position: number) {
-      const droppedResource = dataStore.resources.find(resource => resource.cid === droppedResourceCid);
+      const droppedResource = appStore.data.resources.find(resource => resource.cid === droppedResourceCid);
       if (droppedResource) {
         this.contents.splice(
           position,

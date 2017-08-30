@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import uiStore from './stores/ui';
-import dataStore from './stores/data';
+import appStore from './stores/app';
 
 import FaTrash from './icons/FaTrash';
 import FaPencil from './icons/FaPencil';
@@ -17,6 +16,7 @@ interface ResourceTypeImageProps {
 @observer
 export default class ResourceTypeImage extends React.Component<ResourceTypeImageProps, {}> {
   removeImage = (resource: IResourceModelType) => {
+    const { data: dataStore, ui: uiStore } = appStore;
     uiStore.OverlayContent = () => {
       return (
         <div>
@@ -33,9 +33,7 @@ export default class ResourceTypeImage extends React.Component<ResourceTypeImage
             </button>
           </div>
           <div className="modal-body">
-            <p>
-              Are you sure you want to remove the image {resource.fileName} from the resources?
-            </p>
+            <p>Are you sure you want to remove the image {resource.fileName} from the resources?</p>
           </div>
           <div className="modal-footer">
             <button
@@ -59,17 +57,19 @@ export default class ResourceTypeImage extends React.Component<ResourceTypeImage
 
   render() {
     const { resource } = this.props;
-    const { cid, fileName, isSynced } = resource;
-    if (isSynced) {
+    const { cid, fileName } = resource;
+    if (appStore.syncedResources.indexOf(cid.toString()) !== -1) {
       return (
         <div className="resource-type-image">
           <aside className="resource-type-image__toolbar btn-group">
             <button
               type="button"
               title={
-                resource.isUsed
-                  ? `Can't remove picture ${fileName}, because it's used in the post`
-                  : `Remove picture ${fileName} from project`
+                resource.isUsed ? (
+                  `Can't remove picture ${fileName}, because it's used in the post`
+                ) : (
+                  `Remove picture ${fileName} from project`
+                )
               }
               className="btn btn-secondary"
               disabled={resource.isUsed}

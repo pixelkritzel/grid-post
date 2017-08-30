@@ -1,10 +1,10 @@
-import { onPatch, types } from 'mobx-state-tree';
+import { types } from 'mobx-state-tree';
 
 import getId from '../helpers/get-id';
 import ResourceModel, { ResourceType, IResourceModelType } from './resource-model';
 import PostModel from './post';
 
-const emptyDataStore = {
+export const emptyDataStore = {
   resources: [
     {
       cid: getId('resource'),
@@ -16,12 +16,6 @@ const emptyDataStore = {
     rows: []
   }
 };
-
-const latestSaveAsString = localStorage.getItem('latest');
-let latestSave;
-if (typeof latestSaveAsString === 'string') {
-  latestSave = JSON.parse(latestSaveAsString);
-}
 
 export const DataStoreModel = types.model(
   'DataStore',
@@ -45,41 +39,9 @@ export const DataStoreModel = types.model(
   }
 );
 
-const dataStore = DataStoreModel.create(latestSave || emptyDataStore);
-
-const electron = window['require']('electron');
-
-function sendResourcesToServer() {
-  const syncedResourcesIds = JSON.parse(
-    electron.ipcRenderer.sendSync('resources', JSON.stringify(dataStore.resources))
-  );
-  syncedResourcesIds.forEach((syncedResourceId: string) => {
-    const syncedResource = dataStore.resources.find(resource => resource.cid === syncedResourceId);
-    if (syncedResource) {
-      syncedResource.setIsSynced(true);
-    }
-  });
-}
-
-onPatch(dataStore, sendResourcesToServer);
-sendResourcesToServer();
-
-onPatch(dataStore, () => {
-  const stringifiedStore = JSON.stringify(dataStore);
-  localStorage.setItem('latest', stringifiedStore);
-});
+// onPatch(dataStore, () => {
+//   const stringifiedStore = JSON.stringify(dataStore);
+//   localStorage.setItem('latest', stringifiedStore);
+// });
 
 export type DataStoreType = typeof DataStoreModel.Type;
-export default dataStore;
-
-function saveStore(savePath: string) {
-  electron.ipcRenderer.send(
-    'save-store',
-    JSON.stringify({
-      savePath,
-      content: dataStore
-    })
-  );
-}
-
-export { saveStore };

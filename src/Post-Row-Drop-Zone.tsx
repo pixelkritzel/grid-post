@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import dataStore from './stores/data';
+import appStore from './stores/app';
 
 @observer
 export default class PostRowDropZone extends React.Component {
@@ -12,7 +12,7 @@ export default class PostRowDropZone extends React.Component {
     this.isActive = false;
     const resourceCid = event.dataTransfer.getData('resource-cid');
     if (resourceCid) {
-      dataStore.post.addRow(resourceCid);
+      appStore.data.post.addRow(resourceCid);
     }
   };
 

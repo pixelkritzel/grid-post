@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import dataStore from './stores/data';
+import appStore from './stores/app';
 
 import PostRow from './Post-Row';
 import PostRowDropZone from './Post-Row-Drop-Zone';
@@ -12,7 +12,7 @@ export default class Document extends React.Component {
     return (
       <div>
         <h3>Post</h3>
-        {dataStore.post.rows.map((postRow, index) => <PostRow key={index} postRow={postRow} index={index} />)}
+        {appStore.data.post.rows.map((postRow, index) => <PostRow key={index} postRow={postRow} index={index} />)}
         <PostRowDropZone />
       </div>
     );

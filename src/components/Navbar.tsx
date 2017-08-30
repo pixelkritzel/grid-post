@@ -1,9 +1,19 @@
 import * as React from 'react';
 const { dialog } = window['require']('electron').remote;
 
-import { saveStore } from '../stores/data';
+import { loadStore, newProject, saveStore } from '../stores/app';
 
 class Navbar extends React.Component {
+  loadProject = () => {
+    const { 0: loadPath } = dialog.showOpenDialog({
+      filters: [{ name: 'JPEG', extensions: ['grid-post'] }],
+      properties: ['openFile']
+    });
+    if (loadPath) {
+      loadStore(loadPath);
+    }
+  };
+
   saveProjectAs = () => {
     const savePath: string | undefined = dialog.showSaveDialog({
       filters: [{ name: 'Grid-Post', extensions: ['grid-post'] }]
@@ -21,17 +31,12 @@ class Navbar extends React.Component {
         </a>
         <ul className="navbar-nav">
           <li className="nav-item">
-            <button
-              type="button"
-              className="nav-link btn-link"
-              onClick={() =>
-                console.log(
-                  dialog.showOpenDialog({
-                    filters: [{ name: 'JPEG', extensions: ['grid-post'] }],
-                    properties: ['openFile']
-                  })
-                )}
-            >
+            <button type="button" className="nav-link btn-link" onClick={newProject}>
+              Load
+            </button>
+          </li>
+          <li className="nav-item">
+            <button type="button" className="nav-link btn-link" onClick={this.loadProject}>
               Load
             </button>
           </li>

@@ -3,7 +3,7 @@ import './App.css';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import data from './stores/data';
+import appStore from './stores/app';
 import { ResourceImageType } from './stores/resource-model';
 
 interface FileObjectForElectron extends File {
@@ -16,10 +16,9 @@ function readFileListToImages(fileList: File[]) {
       const image: ResourceImageType = {
         type: 'image',
         path: file.path,
-        fileName: file.name,
-        isSynced: false
+        fileName: file.name
       };
-      data.addResource(image);
+      appStore.data.addResource(image);
     }
   });
 }

@@ -4,7 +4,7 @@ export interface FunctionalComponent {
   (): JSX.Element;
 }
 
-type uiStoreType = {
+export type uiStoreType = {
   OverlayContent: FunctionalComponent | null;
   EditForm: FunctionalComponent | null;
 } & IObservableObject;

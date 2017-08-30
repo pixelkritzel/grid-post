@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import dataStore from './stores/data';
+import appStore from './stores/app';
 
 import Resource from './Resource';
 
@@ -11,7 +11,7 @@ class ResourcesList extends React.Component {
   render() {
     return (
       <ul className="list-unstyled">
-        {dataStore.resources.map((resource: IResourceModelType) => {
+        {appStore.data.resources.map((resource: IResourceModelType) => {
           return (
             <li key={resource.cid.toString()}>
               <Resource resource={resource} />
