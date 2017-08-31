@@ -1,17 +1,13 @@
 import { observable, IObservableObject } from 'mobx';
 import { onPatch } from 'mobx-state-tree';
-
 import { DataStoreModel, DataStoreType, emptyDataStore } from './data';
 import uiStore, { uiStoreType } from './ui';
-
 type appStoreType = {
   data: DataStoreType;
   ui: uiStoreType;
   syncedResources: string[];
 } & IObservableObject;
-
 const initalDataStore = DataStoreModel.create(emptyDataStore);
-
 const appStore: appStoreType = observable({
   data: initalDataStore,
   ui: uiStore,
@@ -19,21 +15,16 @@ const appStore: appStoreType = observable({
 });
 
 export default appStore;
-
 const electron = window['require']('electron');
-
 function sendResourcesToServer() {
   console.log('sendResourcesToServer');
   appStore.syncedResources = JSON.parse(
     electron.ipcRenderer.sendSync('resources', JSON.stringify(appStore.data.resources))
   );
 }
-
 onPatch(appStore.data, sendResourcesToServer);
 sendResourcesToServer();
-
 const fs = window['require']('fs');
-
 function saveStore(savePath: string) {
   fs.writeFile(savePath, JSON.stringify(appStore.data, undefined, 2), (err: any) => {
     if (err) {
@@ -44,9 +35,7 @@ function saveStore(savePath: string) {
     }
   });
 }
-
 export { saveStore };
-
 function loadStore(loadPath: string) {
   fs.readFile(loadPath, { encoding: 'utf8' }, (err: {}, jsonString: string) => {
     let loadedStore: {} = {};
@@ -66,13 +55,10 @@ function loadStore(loadPath: string) {
     }
   });
 }
-
 export { loadStore };
-
 function newProject() {
   const newDataStore = DataStoreModel.create(emptyDataStore);
   appStore.data = newDataStore;
   onPatch(appStore.data, sendResourcesToServer);
 }
-
 export { newProject };
