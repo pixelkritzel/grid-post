@@ -17,7 +17,6 @@ const appStore: appStoreType = observable({
 export default appStore;
 const electron = window['require']('electron');
 function sendResourcesToServer() {
-  console.log('sendResourcesToServer');
   appStore.syncedResources = JSON.parse(
     electron.ipcRenderer.sendSync('resources', JSON.stringify(appStore.data.resources))
   );
