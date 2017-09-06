@@ -21,7 +21,7 @@ export default class PostRowColumnHeightDragger extends React.Component<PostRowC
       const mouseY = event.clientY - columnElement.getBoundingClientRect().top;
       const columnElementHeight = columnElement.clientHeight;
       const relativeMouseX = clamp(mouseY / columnElementHeight * 100, 0, 100);
-      column.contents[0].setHeight(relativeMouseX);
+      column.setContentHeight(relativeMouseX);
     }
   };
 

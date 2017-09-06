@@ -32,16 +32,6 @@ export const PostRowColumnModel = types
         }
       }
     }
-    function setWidth(width: number) {
-      const otherColumnsWidth = 100 - width;
-      const columns: (typeof self)[] = getParent(self, 1);
-      const indexOfThis = columns.indexOf(self);
-      self.width = width;
-      if (columns.length > 1) {
-        const otherColumn = columns[indexOfThis + 1];
-        otherColumn.width = otherColumnsWidth;
-      }
-    }
     function remove() {
       const parentPostRow: PostRowModelType = getParent(self, 2);
       const columns: (typeof self)[] = parentPostRow.columns;
@@ -53,14 +43,22 @@ export const PostRowColumnModel = types
       if (self.contents.length === 0) {
         remove();
       } else if (self.contents.length === 1) {
-        self.contents[0].setHeight(100);
+        setContentHeight(100);
+      }
+    }
+    function setContentHeight(height: number) {
+      const { contents } = self;
+      contents[0].height = height;
+      if (contents.length > 1) {
+        const otherContentsHeight = 100 - height;
+        contents[1].height = otherContentsHeight;
       }
     }
     return {
       addResource,
-      setWidth,
       remove,
-      removeContent
+      removeContent,
+      setContentHeight
     };
   });
 export type PostRowColumnModelType = typeof PostRowColumnModel.Type;

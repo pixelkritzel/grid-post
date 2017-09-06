@@ -26,7 +26,7 @@ onPatch(appStore.data, sendResourcesToServer);
 sendResourcesToServer();
 const fs = window['require']('fs');
 function saveStore(savePath: string) {
-  fs.writeFile(savePath, JSON.stringify(appStore.data, undefined, 2), (err: any) => {
+  fs.writeFile(savePath, JSON.stringify(appStore.data, undefined, 2), (err: {}) => {
     if (err) {
       console.log(`Error on saving ${savePath}`);
       console.log(err);

@@ -21,7 +21,7 @@ export default class PostRowColumnWidthDragger extends React.Component<PostRowCo
       const mouseX = event.clientX - postRowContent.getBoundingClientRect().left;
       const postRowContentWidth = postRowContent.clientWidth;
       const relativeMouseX = clamp(mouseX / postRowContentWidth * 100, 0, 100);
-      postRow.columns[0].setWidth(relativeMouseX);
+      postRow.setColumnsWidth(relativeMouseX);
     }
   };
 

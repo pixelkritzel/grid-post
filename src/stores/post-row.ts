@@ -41,8 +41,16 @@ export const PostRowModel = types
       if (self.columns.length === 0) {
         remove();
       } else if (self.columns.length === 1) {
-        console.log('SHould be set 100');
-        self.columns[0].setWidth(100);
+        console.log('Should be set 100');
+        setColumnsWidth(100);
+      }
+    }
+    function setColumnsWidth(width: number) {
+      const { columns } = self;
+      columns[0].width = width;
+      if (columns.length > 1) {
+        const otherColumnsWidth = 100 - width;
+        columns[1].width = otherColumnsWidth;
       }
     }
     function setWidth(width: number) {
@@ -61,6 +69,7 @@ export const PostRowModel = types
       addColumn,
       remove,
       removeColumn,
+      setColumnsWidth,
       setWidth,
       setHeight,
       setMarginBottom,
