@@ -72,7 +72,7 @@ class ImageUploader extends React.Component {
       >
         <label htmlFor="fileSelect" className="btn btn-primary" role="button">
           Datei auswählen
-          <input type="file" id="fileSelect" className="sr-only sr-only-focusable" onChange={this.onFileSelectChange} />
+          <input type="file" id="fileSelect" className="visuallyhidden" onChange={this.onFileSelectChange} />
         </label>
         {this.isFileDrag ? <p>DropHere</p> : this.props.children}
       </div>
