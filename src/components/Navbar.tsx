@@ -32,7 +32,7 @@ class Navbar extends React.Component {
         <ul className="navbar-nav">
           <li className="nav-item">
             <button type="button" className="nav-link btn-link" onClick={newProject}>
-              Load
+              New
             </button>
           </li>
           <li className="nav-item">
