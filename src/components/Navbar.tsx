@@ -1,8 +1,7 @@
 import * as React from 'react';
 const { dialog } = window['require']('electron').remote;
 
-import { loadStore, newProject, saveStore } from '../stores/app';
-
+import appStore, { loadStore, newProject, saveStore } from '../stores/app';
 class Navbar extends React.Component {
   loadProject = () => {
     const { 0: loadPath } = dialog.showOpenDialog({
@@ -11,6 +10,14 @@ class Navbar extends React.Component {
     });
     if (loadPath) {
       loadStore(loadPath);
+    }
+  };
+
+  saveProject = () => {
+    if (appStore.ui.projectPath) {
+      saveStore(appStore.ui.projectPath);
+    } else {
+      this.saveProjectAs();
     }
   };
 
@@ -46,7 +53,7 @@ class Navbar extends React.Component {
             </button>
           </li>
           <li className="nav-item">
-            <button type="button" className="nav-link btn-link">
+            <button type="button" className="nav-link btn-link" onClick={this.saveProject}>
               Save
             </button>
           </li>

@@ -23,6 +23,7 @@ function sendResourcesToServer() {
 }
 onPatch(appStore.data, sendResourcesToServer);
 sendResourcesToServer();
+
 const fs = window['require']('fs');
 function saveStore(savePath: string) {
   fs.writeFile(savePath, JSON.stringify(appStore.data, undefined, 2), (err: {}) => {
@@ -35,6 +36,7 @@ function saveStore(savePath: string) {
   });
 }
 export { saveStore };
+
 function loadStore(loadPath: string) {
   fs.readFile(loadPath, { encoding: 'utf8' }, (err: {}, jsonString: string) => {
     let loadedStore: {} = {};
@@ -47,6 +49,7 @@ function loadStore(loadPath: string) {
         console.log(e);
         return;
       }
+      appStore.ui.projectPath = loadPath;
       const newDataStore = DataStoreModel.create(loadedStore);
       appStore.data = newDataStore;
       onPatch(appStore.data, sendResourcesToServer);
@@ -55,9 +58,11 @@ function loadStore(loadPath: string) {
   });
 }
 export { loadStore };
+
 function newProject() {
   const newDataStore = DataStoreModel.create(emptyDataStore);
   appStore.data = newDataStore;
+  appStore.ui.projectPath = null;
   onPatch(appStore.data, sendResourcesToServer);
 }
 export { newProject };
