@@ -10,11 +10,13 @@ const PostModel = types
   })
   .views(self => ({
     resourceIsUsed(resource: IResourceModelType) {
+      /* tslint:disable:no-shadowed-variable */
       const resourceCounter = self.rows.reduce((prev, row) => {
         return row.columns.reduce((prev, column) => {
           return column.contents.reduce((prev, content) => (content.resource === resource ? ++prev : prev), prev);
         }, prev);
       }, 0);
+      /* ts-lint:enable */
       return resourceCounter !== 0;
     }
   }))

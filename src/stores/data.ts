@@ -26,6 +26,7 @@ export const DataStoreModel = types
     }
     function removeResource(resource: IResourceModelType) {
       if (self.post.resourceIsUsed(resource)) {
+        // tslint:disable-next-line:quotemark
         throw new Error("Can't remove resource because it's used in the post");
       }
       const indexOfResource = self.resources.indexOf(resource);
