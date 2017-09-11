@@ -2,6 +2,9 @@ import { observable, IObservableObject } from 'mobx';
 import { onPatch } from 'mobx-state-tree';
 import { DataStoreModel, DataStoreType, emptyDataStore } from './data';
 import uiStore, { uiStoreType } from './ui';
+import electronRequire from '../helpers/electron-require';
+const fs = electronRequire('fs');
+
 type appStoreType = {
   data: DataStoreType;
   ui: uiStoreType;
@@ -14,8 +17,11 @@ const appStore: appStoreType = observable({
   syncedResources: []
 });
 
+// tslint:disable-next-line
+window['appStore'] = appStore;
+
 export default appStore;
-const electron = window['require']('electron');
+const electron = electronRequire('electron');
 function sendResourcesToServer() {
   appStore.syncedResources = JSON.parse(
     electron.ipcRenderer.sendSync('resources', JSON.stringify(appStore.data.resources))
@@ -24,7 +30,6 @@ function sendResourcesToServer() {
 onPatch(appStore.data, sendResourcesToServer);
 sendResourcesToServer();
 
-const fs = window['require']('fs');
 function saveStore(savePath: string) {
   fs.writeFile(savePath, JSON.stringify(appStore.data, undefined, 2), (err: {}) => {
     if (err) {

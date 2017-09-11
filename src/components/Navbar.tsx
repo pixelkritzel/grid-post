@@ -1,15 +1,28 @@
 import * as React from 'react';
-const { dialog } = window['require']('electron').remote;
+
+import exportProject from '../export-project';
+import electronRequire from '../helpers/electron-require';
+
+const { dialog } = electronRequire('electron').remote;
 
 import appStore, { loadStore, newProject, saveStore } from '../stores/app';
 class Navbar extends React.Component {
+  exportProject = () => {
+    const dialogResult: string[] | undefined = dialog.showOpenDialog({
+      properties: ['openDirectory', 'createDirectory']
+    });
+    if (dialogResult) {
+      exportProject(dialogResult[0]);
+    }
+  };
+
   loadProject = () => {
-    const { 0: loadPath } = dialog.showOpenDialog({
-      filters: [{ name: 'JPEG', extensions: ['grid-post'] }],
+    const dialogResult = dialog.showOpenDialog({
+      filters: [{ name: 'Grid-Post file', extensions: ['grid-post'] }],
       properties: ['openFile']
     });
-    if (loadPath) {
-      loadStore(loadPath);
+    if (dialogResult) {
+      loadStore(dialogResult[0]);
     }
   };
 
@@ -55,6 +68,11 @@ class Navbar extends React.Component {
           <li className="nav-item">
             <button type="button" className="nav-link btn-link" onClick={this.saveProject}>
               Save
+            </button>
+          </li>
+          <li>
+            <button type="button" className="nav-link btn-link" onClick={this.exportProject}>
+              Export
             </button>
           </li>
         </ul>

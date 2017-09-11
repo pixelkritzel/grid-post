@@ -2,7 +2,8 @@ import * as React from 'react';
 import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import uiStore from './stores/ui';
+import appStore from './stores/app';
+import { Mode } from './stores/ui';
 
 import PostRowColumnHeightDragger from './Post-Row-Column-Height-Dragger';
 import InputGroup from './components/forms/Input-Group';
@@ -16,7 +17,7 @@ import { PostRowColumnModelType } from './stores/post-row-column';
 import { PostRowContentModelType } from './stores/post-row-content';
 
 const renderEditForm = (content: PostRowContentModelType) =>
-  (uiStore.EditForm = () => {
+  (appStore.ui.EditForm = () => {
     return (
       <div>
         <h1>Edit picture</h1>
@@ -116,35 +117,39 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
                     className="img-fluid"
                     alt={content.resource.fileName}
                   />
-                  <aside className="post-row-column__resource__toolbar btn-group">
-                    <button type="button" title={``} className="btn btn-secondary" onClick={console.log}>
-                      <FaArrows />
-                    </button>
-                    <button
-                      type="button"
-                      title={`Edit picture`}
-                      className="btn btn-secondary"
-                      onClick={() => renderEditForm(content)}
-                    >
-                      <FaPencil />
-                    </button>
-                    <button
-                      type="button"
-                      title={``}
-                      className="btn btn-danger"
-                      onClick={() => {
-                        uiStore.EditForm = null;
-                        content.remove();
-                      }}
-                    >
-                      <FaClose />
-                    </button>
-                  </aside>
+                  {appStore.ui.mode === Mode.DEV ? (
+                    <aside className="post-row-column__resource__toolbar btn-group">
+                      <button type="button" title={``} className="btn btn-secondary" onClick={console.log}>
+                        <FaArrows />
+                      </button>
+                      <button
+                        type="button"
+                        title={`Edit picture`}
+                        className="btn btn-secondary"
+                        onClick={() => renderEditForm(content)}
+                      >
+                        <FaPencil />
+                      </button>
+                      <button
+                        type="button"
+                        title={``}
+                        className="btn btn-danger"
+                        onClick={() => {
+                          appStore.ui.EditForm = null;
+                          content.remove();
+                        }}
+                      >
+                        <FaClose />
+                      </button>
+                    </aside>
+                  ) : null}
                 </div>
               </div>
             );
           })}
-          {column.contents.length > 1 ? <PostRowColumnHeightDragger column={column} /> : null}
+          {column.contents.length > 1 && appStore.ui.mode === Mode.DEV ? (
+            <PostRowColumnHeightDragger column={column} />
+          ) : null}
           {this.isDropTarget ? (
             <div
               className="post-row-column__drop-top"

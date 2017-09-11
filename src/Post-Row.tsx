@@ -2,7 +2,8 @@ import * as React from 'react';
 import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import uiStore from './stores/ui';
+import appStore from './stores/app';
+import { Mode } from './stores/ui';
 
 import PostRowColumn from './Post-Row-Column';
 import PostRowColumnWidthDragger from './Post-Row-Column-Width-Dragger';
@@ -35,7 +36,7 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
   };
 
   renderEditForm = (postRow: PostRowModelType, index: number) => {
-    uiStore.EditForm = () => {
+    appStore.ui.EditForm = () => {
       return (
         <div>
           <h3>Edit the {index + 1}. post row</h3>
@@ -112,27 +113,29 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
           ))}
           {postRow.columns.length > 1 ? <PostRowColumnWidthDragger postRow={postRow} /> : null}
         </div>
-        <aside className="post-row__toolbar btn-group btn-group-vertical">
-          <button
-            type="button"
-            title={``}
-            className="btn btn-secondary"
-            onClick={() => this.renderEditForm(postRow, postRowIndex)}
-          >
-            <FaPencil />
-          </button>
-          <button
-            type="button"
-            title={``}
-            className="btn btn-danger"
-            onClick={() => {
-              uiStore.EditForm = null;
-              postRow.remove();
-            }}
-          >
-            <FaClose />
-          </button>
-        </aside>
+        {appStore.ui.mode === Mode.DEV ? (
+          <aside className="post-row__toolbar btn-group btn-group-vertical">
+            <button
+              type="button"
+              title={``}
+              className="btn btn-secondary"
+              onClick={() => this.renderEditForm(postRow, postRowIndex)}
+            >
+              <FaPencil />
+            </button>
+            <button
+              type="button"
+              title={``}
+              className="btn btn-danger"
+              onClick={() => {
+                appStore.ui.EditForm = null;
+                postRow.remove();
+              }}
+            >
+              <FaClose />
+            </button>
+          </aside>
+        ) : null}
         {this.isDropTarget ? (
           <div
             className="post-row__drop-left"
