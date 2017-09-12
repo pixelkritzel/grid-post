@@ -5,15 +5,25 @@ import uiStore, { uiStoreType } from './ui';
 import electronRequire from '../helpers/electron-require';
 const fs = electronRequire('fs');
 
+export enum Mode {
+  DEV,
+  EXPORT
+}
+
 type appStoreType = {
   data: DataStoreType;
   ui: uiStoreType;
+  exportDirectory: string | null;
+  mode: Mode;
   syncedResources: string[];
 } & IObservableObject;
 const initalDataStore = DataStoreModel.create(emptyDataStore);
+
 const appStore: appStoreType = observable({
   data: initalDataStore,
   ui: uiStore,
+  exportDirectory: null,
+  mode: Mode.DEV,
   syncedResources: []
 });
 

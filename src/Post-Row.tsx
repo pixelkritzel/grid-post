@@ -2,8 +2,7 @@ import * as React from 'react';
 import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import appStore from './stores/app';
-import { Mode } from './stores/ui';
+import appStore, { Mode } from './stores/app';
 
 import PostRowColumn from './Post-Row-Column';
 import PostRowColumnWidthDragger from './Post-Row-Column-Width-Dragger';
@@ -111,9 +110,11 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
           {postRow.columns.map((column: PostRowColumnModelType, index) => (
             <PostRowColumn key={index} column={column} />
           ))}
-          {postRow.columns.length > 1 ? <PostRowColumnWidthDragger postRow={postRow} /> : null}
+          {postRow.columns.length > 1 && appStore.mode === Mode.DEV ? (
+            <PostRowColumnWidthDragger postRow={postRow} />
+          ) : null}
         </div>
-        {appStore.ui.mode === Mode.DEV ? (
+        {appStore.mode === Mode.DEV ? (
           <aside className="post-row__toolbar btn-group btn-group-vertical">
             <button
               type="button"

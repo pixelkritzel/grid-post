@@ -18,6 +18,19 @@ const PostModel = types
       }, 0);
       /* ts-lint:enable */
       return resourceCounter !== 0;
+    },
+    get allImagePaths(): string[] {
+      const imagePaths: string[] = [];
+      self.rows.forEach(row =>
+        row.columns.forEach(column =>
+          column.contents.forEach(content => {
+            if (!imagePaths.includes(content.resource.path)) {
+              imagePaths.push(content.resource.path);
+            }
+          })
+        )
+      );
+      return imagePaths;
     }
   }))
   .actions(self => {

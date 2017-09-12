@@ -2,8 +2,7 @@ import * as React from 'react';
 import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import appStore from './stores/app';
-import { Mode } from './stores/ui';
+import appStore, { Mode } from './stores/app';
 
 import PostRowColumnHeightDragger from './Post-Row-Column-Height-Dragger';
 import InputGroup from './components/forms/Input-Group';
@@ -106,18 +105,14 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
               marginBottom: content.marginBottom,
               marginLeft: content.marginLeft,
               height: `calc(100% - ${content.marginTop} - ${content.marginBottom})`,
-              backgroundImage: `url(${getImgSrc(content.resource.cid.toString())})`
+              backgroundImage: `url(${getImgSrc(content.resource)})`
             };
 
             return (
               <div style={resourceStyle} key={cid.toString()}>
                 <div className="post-row-column__resource" style={backgroundImage}>
-                  <img
-                    src={getImgSrc(content.resource.cid.toString())}
-                    className="img-fluid"
-                    alt={content.resource.fileName}
-                  />
-                  {appStore.ui.mode === Mode.DEV ? (
+                  <img src={getImgSrc(content.resource)} className="img-fluid" alt={content.resource.fileName} />
+                  {appStore.mode === Mode.DEV ? (
                     <aside className="post-row-column__resource__toolbar btn-group">
                       <button type="button" title={``} className="btn btn-secondary" onClick={console.log}>
                         <FaArrows />
@@ -147,7 +142,7 @@ export default class PostRowColumn extends React.Component<PostRowColumnProps, {
               </div>
             );
           })}
-          {column.contents.length > 1 && appStore.ui.mode === Mode.DEV ? (
+          {column.contents.length > 1 && appStore.mode === Mode.DEV ? (
             <PostRowColumnHeightDragger column={column} />
           ) : null}
           {this.isDropTarget ? (

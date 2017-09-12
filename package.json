@@ -12,10 +12,12 @@
     "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
     "mobx-state-tree": "^0.11.0",
+    "pretty": "^2.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-icon-base": "^2.1.0",
-    "react-scripts-ts": "2.5.0"
+    "react-scripts-ts": "2.5.0",
+    "shelljs": "^0.7.8"
   },
   "devDependencies": {
     "@types/jest": "^20.0.5",

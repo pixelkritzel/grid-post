@@ -81,7 +81,7 @@ export default class ResourceTypeImage extends React.Component<ResourceTypeImage
               <FaPencil />
             </button>
           </aside>
-          <img src={getImgSrc(cid.toString())} className="img-fluid" alt={fileName} />
+          <img src={getImgSrc(resource)} className="img-fluid" alt={fileName} />
         </div>
       );
     } else {
