@@ -8,9 +8,12 @@ export type uiStoreType = {
   EditForm: FunctionalComponent | null;
   projectPath: string | null;
 } & IObservableObject;
-const uiStore: uiStoreType = observable({
+
+export const uiStoreDefaultValue = {
   OverlayContent: null,
   EditForm: null,
   projectPath: null
-});
+};
+
+const uiStore: uiStoreType = observable(uiStoreDefaultValue);
 export default uiStore;

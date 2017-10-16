@@ -1,7 +1,7 @@
 import { observable, IObservableObject } from 'mobx';
 import { onPatch } from 'mobx-state-tree';
 import { DataStoreModel, DataStoreType, emptyDataStore } from './data';
-import uiStore, { uiStoreType } from './ui';
+import uiStore, { uiStoreDefaultValue, uiStoreType } from './ui';
 import electronRequire from '../helpers/electron-require';
 const fs = electronRequire('fs');
 
@@ -64,6 +64,7 @@ function loadStore(loadPath: string) {
         console.log(e);
         return;
       }
+      appStore.ui = Object.assign(appStore.ui, uiStoreDefaultValue);
       appStore.ui.projectPath = loadPath;
       const newDataStore = DataStoreModel.create(loadedStore);
       appStore.data = newDataStore;
