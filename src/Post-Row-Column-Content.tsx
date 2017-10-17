@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 
 import FaArrows from './icons/FaArrows';
@@ -22,11 +22,26 @@ export class PostRowColumnContent extends React.Component<PostRowColumnContentPr
   incrementDragCounter = () => this.dragCounter++;
   decrementDragCounter = () => this.dragCounter--;
 
-  switchResource = ({ contentCid, resourceCid }: { contentCid: string; resourceCid: string }) => {
+  switchResource = ({
+    contentCid,
+    resourceCid
+  }: {
+    contentCid: string | undefined;
+    resourceCid: string | undefined;
+  }) => {
     const { content: currentContent } = this.props;
+    if (contentCid) {
+      const sourceContent = appStore.data.post.getContentModel(contentCid)!;
+      const { resource: newResource } = sourceContent;
+      const { resource: currentResource } = currentContent;
+      runInAction(() => {
+        currentContent.changeResource(newResource);
+        sourceContent.changeResource(currentResource);
+      });
+    }
     if (resourceCid) {
       const newResource = appStore.data.resources.find(testedResource => testedResource.cid.toString() === resourceCid);
-      currentContent.switchResource(newResource);
+      currentContent.changeResource(newResource);
     }
   };
 

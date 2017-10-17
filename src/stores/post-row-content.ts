@@ -17,7 +17,7 @@ export const PostRowContentModel = types
       const key = 'margin' + direction.charAt(0).toUpperCase() + direction.slice(1);
       self[key] = value;
     }
-    function switchResource(newResource: IResourceModelType) {
+    function changeResource(newResource: IResourceModelType) {
       self.resource = newResource;
     }
     function remove() {
@@ -28,7 +28,7 @@ export const PostRowContentModel = types
     }
     return {
       setMargin,
-      switchResource,
+      changeResource,
       remove
     };
   });
