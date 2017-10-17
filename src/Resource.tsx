@@ -21,7 +21,7 @@ class Resource extends React.Component<ResourceProps, {}> {
       ResourceComponent = ResourceTypeImage;
     }
     return (
-      <div onDragStart={event => event.dataTransfer.setData('resource-cid', resource.cid.toString())}>
+      <div draggable={true} onDragStart={event => event.dataTransfer.setData('resource-cid', resource.cid.toString())}>
         {typeof ResourceComponent !== 'undefined' ? <ResourceComponent resource={resource} /> : null}
       </div>
     );

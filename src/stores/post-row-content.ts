@@ -1,5 +1,5 @@
 import { types, getParent } from 'mobx-state-tree';
-import resourceModel from './resource-model';
+import resourceModel, { IResourceModelType } from './resource-model';
 import { PostRowColumnModelType } from './post-row-column';
 type DirectionsType = 'top' | 'right' | 'bottom' | 'left';
 export const PostRowContentModel = types
@@ -17,6 +17,9 @@ export const PostRowContentModel = types
       const key = 'margin' + direction.charAt(0).toUpperCase() + direction.slice(1);
       self[key] = value;
     }
+    function switchResource(newResource: IResourceModelType) {
+      self.resource = newResource;
+    }
     function remove() {
       const parentColumn: PostRowColumnModelType = getParent(self, 2);
       const contents: (typeof self)[] = parentColumn.contents;
@@ -25,6 +28,7 @@ export const PostRowContentModel = types
     }
     return {
       setMargin,
+      switchResource,
       remove
     };
   });

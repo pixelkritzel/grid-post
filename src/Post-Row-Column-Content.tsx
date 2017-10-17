@@ -20,8 +20,16 @@ interface PostRowColumnContentProps {
 export class PostRowColumnContent extends React.Component<PostRowColumnContentProps, {}> {
   @observable dragCounter = 0;
   incrementDragCounter = () => this.dragCounter++;
-
   decrementDragCounter = () => this.dragCounter--;
+
+  switchResource = ({ contentCid, resourceCid }: { contentCid: string; resourceCid: string }) => {
+    const { content: currentContent } = this.props;
+    if (resourceCid) {
+      const newResource = appStore.data.resources.find(testedResource => testedResource.cid.toString() === resourceCid);
+      currentContent.switchResource(newResource);
+    }
+  };
+
   render() {
     const { content } = this.props;
     const { cid } = content;
@@ -55,7 +63,7 @@ export class PostRowColumnContent extends React.Component<PostRowColumnContentPr
                 <div
                   className="btn btn-secondary"
                   draggable={true}
-                  onDragStart={event => event.dataTransfer.setData('resource-cid', content.resource.cid.toString())}
+                  onDragStart={event => event.dataTransfer.setData('content-cid', content.cid.toString())}
                 >
                   <FaArrows />
                 </div>
@@ -81,7 +89,14 @@ export class PostRowColumnContent extends React.Component<PostRowColumnContentPr
               </aside>
               {this.dragCounter !== 0 && (
                 <aside>
-                  <div className="btn btn-secondary">
+                  <div
+                    className="btn btn-secondary"
+                    onDrop={event =>
+                      this.switchResource({
+                        resourceCid: event.dataTransfer.getData('resource-cid'),
+                        contentCid: event.dataTransfer.getData('content-cid')
+                      })}
+                  >
                     <FaRefresh />
                   </div>
                 </aside>
