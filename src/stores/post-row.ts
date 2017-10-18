@@ -41,7 +41,6 @@ export const PostRowModel = types
       if (self.columns.length === 0) {
         remove();
       } else if (self.columns.length === 1) {
-        console.log('Should be set 100');
         setColumnsWidth(100);
       }
     }
