@@ -12,6 +12,7 @@ export const emptyDataStore = {
 
   post: {
     cid: getId('post'),
+    defaultStyles: {},
     rows: []
   }
 };

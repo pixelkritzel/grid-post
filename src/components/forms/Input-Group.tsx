@@ -13,10 +13,11 @@ type InputGroupPropsType = {
   labelHtml: string | FunctionalComponent;
   inputType: string;
   inputValue: string;
+  placeholder?: string;
   onChange: OnChangeCallback;
 };
 
-const InputGroup = ({ identifier, labelHtml, inputType, inputValue, onChange }: InputGroupPropsType) => {
+const InputGroup = ({ identifier, labelHtml, inputType, inputValue, onChange, placeholder }: InputGroupPropsType) => {
   return (
     <div>
       <label htmlFor={identifier} className="mr-sm-2">
@@ -28,6 +29,7 @@ const InputGroup = ({ identifier, labelHtml, inputType, inputValue, onChange }: 
         className="formControl mr-sm-2"
         id={identifier}
         defaultValue={inputValue}
+        placeholder={placeholder}
         onChange={onChange}
       />
     </div>

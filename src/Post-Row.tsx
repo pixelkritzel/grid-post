@@ -44,19 +44,11 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
             <InputGroup
               identifier="post-row-margin-bottom"
               labelHtml="Margin Bottom Value"
-              inputType="number"
-              inputValue={postRow.marginBottom.toString()}
-              onChange={event => postRow.setMarginBottom(parseFloat(event.target.value))}
-            />
-
-            {' : '}
-
-            <InputGroup
-              identifier="post-row-margin-botto-unit"
-              labelHtml=" Margin Bottom Unit"
               inputType="text"
-              inputValue={postRow.marginBottomUnit}
-              onChange={event => postRow.setMarginBottomUnit(event.target.value)}
+              inputValue={postRow.marginBottom ? postRow.marginBottom.toString() : ''}
+              onChange={event => postRow.setMarginBottom(event.target.value)}
+              placeholder={`At the moment the resource uses the default margin-bottom of ${appStore.data.post
+                .defaultStyles.rowMarginBottom}`}
             />
           </div>
           <div className="form-inline">
@@ -64,7 +56,7 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
               identifier="post-row-width"
               labelHtml="Width"
               inputType="number"
-              inputValue={postRow.width.toString()}
+              inputValue={postRow.width ? postRow.width.toString() : ''}
               onChange={event => postRow.setWidth(parseFloat(event.target.value))}
             />
 
@@ -73,7 +65,7 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
               identifier="post-row-height"
               labelHtml="Height"
               inputType="number"
-              inputValue={postRow.height.toString()}
+              inputValue={postRow.height ? postRow.height.toString() : ''}
               onChange={event => postRow.setHeight(parseFloat(event.target.value))}
             />
           </div>
@@ -89,10 +81,14 @@ export default class PostRow extends React.Component<PostRowProps, {}> {
   render() {
     const { postRow, index: postRowIndex } = this.props;
     const postRowStyle = {
-      marginBottom: postRow.marginBottom + postRow.marginBottomUnit
+      marginBottom: postRow.marginBottom || appStore.data.post.defaultStyles.rowMarginBottom
     };
     const postRowRatio = {
-      paddingTop: postRow.height / postRow.width * 100 + '%'
+      paddingTop:
+        (postRow.height || appStore.data.post.defaultStyles.rowRatioHeight) /
+          (postRow.width || appStore.data.post.defaultStyles.rowRatioWidth) *
+          100 +
+        '%'
     };
     return (
       <div

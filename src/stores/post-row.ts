@@ -5,10 +5,9 @@ import getId from '../helpers/get-id';
 export const PostRowModel = types
   .model('PostRowModel', {
     columns: types.array(PostRowColumnModel),
-    width: 16,
-    height: 9,
-    marginBottom: 8,
-    marginBottomUnit: 'px'
+    width: types.maybe(types.number),
+    height: types.maybe(types.number),
+    marginBottom: types.maybe(types.string)
   })
   .views(self => ({
     get isExtendable() {
@@ -58,11 +57,8 @@ export const PostRowModel = types
     function setHeight(height: number) {
       self.height = height;
     }
-    function setMarginBottom(marginBottom: number) {
+    function setMarginBottom(marginBottom: string) {
       self.marginBottom = marginBottom;
-    }
-    function setMarginBottomUnit(unit: string) {
-      self.marginBottomUnit = unit;
     }
     return {
       addColumn,
@@ -71,8 +67,7 @@ export const PostRowModel = types
       setColumnsWidth,
       setWidth,
       setHeight,
-      setMarginBottom,
-      setMarginBottomUnit
+      setMarginBottom
     };
   });
 export type PostRowModelType = typeof PostRowModel.Type;

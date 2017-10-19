@@ -8,7 +8,12 @@ import { IResourceModelType } from './resource-model';
 const PostModel = types
   .model('Post', {
     cid: types.identifier(),
-    rows: types.array(PostRowModel)
+    rows: types.array(PostRowModel),
+    defaultStyles: types.model({
+      rowMarginBottom: '8px',
+      rowRatioWidth: 16,
+      rowRatioHeight: 9
+    })
   })
   .views(self => ({
     get allImagePaths(): string[] {
