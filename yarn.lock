@@ -4563,9 +4563,9 @@ react-error-overlay@^1.0.6:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
-react-icon-base@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.1.0.tgz#a196e33fdf1e7aaa1fda3aefbb68bdad9e82a79d"
+"react-icon-base@git@github.com:pixelkritzel/react-icon-base.git":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.1.1.tgz#ec5cd5f5797f29102581693d0ae9a739e3e586c2"
 
 react-scripts-ts@2.5.0:
   version "2.5.0"

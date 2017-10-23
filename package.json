@@ -15,14 +15,14 @@
     "pretty": "^2.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-icon-base": "^2.1.0",
+    "react-icon-base": "git@github.com:pixelkritzel/react-icon-base.git",
     "react-scripts-ts": "2.5.0",
     "shelljs": "^0.7.8"
   },
   "devDependencies": {
     "@types/node": "^8.0.19",
     "@types/prop-types": "^15.5.1",
-    "@types/react": "^16.0.0",
+    "@types/react": "^15.6.1",
     "@types/react-dom": "^15.5.1",
     "electron": "^1.6.11",
     "mobx-react-devtools": "^4.2.15",
