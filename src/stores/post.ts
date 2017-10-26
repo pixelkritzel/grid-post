@@ -74,9 +74,13 @@ const PostModel = types
     function removePostRow(indexOfPostRow: number) {
       self.rows.splice(indexOfPostRow, 1);
     }
+    function setDefaultStyle(key: 'rowMarginBottom' | 'rowRatioWidth' | 'rowRatioHeight', value: string | number) {
+      self.defaultStyles[key] = value;
+    }
     return {
       addRow,
-      removePostRow
+      removePostRow,
+      setDefaultStyle
     };
   });
 

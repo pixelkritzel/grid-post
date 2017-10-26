@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 
 import appStore, { Mode } from './stores/app';
 
+import DefaultStyleEditor from './components/Default-Style-Editor';
+import FaPencil from './icons/FaPencil';
 import PostRow from './Post-Row';
 import PostRowDropZone from './Post-Row-Drop-Zone';
 
@@ -46,13 +48,22 @@ const style = `.post-row {
   width: 0;
 }
 `;
+
+function showDefaultStyleEditor() {
+  appStore.ui.EditForm = DefaultStyleEditor;
+}
+
 @observer
 export default class Document extends React.Component {
   render() {
     return (
       <div>
         <style>{style}</style>
-        <h3>Post</h3>
+        {appStore.mode === Mode.DEV && (
+          <button className="btn btn-secondary" onClick={showDefaultStyleEditor}>
+            <FaPencil />
+          </button>
+        )}
         {appStore.data.post.rows.map((postRow, index) => <PostRow key={index} postRow={postRow} index={index} />)}
         {appStore.mode === Mode.DEV ? <PostRowDropZone /> : null}
       </div>
