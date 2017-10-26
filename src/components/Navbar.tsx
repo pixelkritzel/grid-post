@@ -51,27 +51,27 @@ class Navbar extends React.Component {
         </a>
         <ul className="navbar-nav">
           <li className="nav-item">
-            <button type="button" className="nav-link btn-link" onClick={newProject}>
+            <button type="button" className="nav-link btn btn-link" onClick={newProject}>
               New
             </button>
           </li>
           <li className="nav-item">
-            <button type="button" className="nav-link btn-link" onClick={this.loadProject}>
+            <button type="button" className="nav-link btn btn-link" onClick={this.loadProject}>
               Load
             </button>
           </li>
           <li className="nav-item">
-            <button type="button" className="nav-link btn-link" onClick={this.saveProjectAs}>
+            <button type="button" className="nav-link btn btn-link" onClick={this.saveProjectAs}>
               Save as ...
             </button>
           </li>
           <li className="nav-item">
-            <button type="button" className="nav-link btn-link" onClick={this.saveProject}>
+            <button type="button" className="nav-link btn btn-link" onClick={this.saveProject}>
               Save
             </button>
           </li>
           <li>
-            <button type="button" className="nav-link btn-link" onClick={this.exportProject}>
+            <button type="button" className="nav-link btn btn-link" onClick={this.exportProject}>
               Export
             </button>
           </li>
