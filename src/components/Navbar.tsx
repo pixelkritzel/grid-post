@@ -45,7 +45,7 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-sm navbar-light bg-light">
         <a className="navbar-brand" href="#">
           Grid-Post
         </a>

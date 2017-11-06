@@ -1,0 +1,72 @@
+@import 'bootstrap/scss/bootstrap.scss';
+@import 'scss/post-row';
+@import 'scss/overlay';
+@import 'scss/sidebar';
+body {
+    min-width: 1024px;
+}
+
+#please-resize {
+    display: none;
+}
+
+@media screen and (max-width: 930px) {
+    body {
+        min-width: auto;
+    }
+    #root {
+        display: none;
+    }
+    #please-resize {
+        display: block;
+    }
+}
+
+.image-uploader {
+    position: fixed;
+    @include make-col(4);
+    top: 56px;
+    right: 0;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-align: center;
+    padding: 40px;
+    border-left: 1px solid #000;
+}
+
+.image-uploader--hover {
+    background-color: #ccc;
+}
+
+.resource-type-image {
+    position: relative;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    .resource-type-image__toolbar {
+        display: none;
+    }
+    &:hover .resource-type-image__toolbar {
+        display: block;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+    }
+}
+
+.post-container {
+    padding-left: 80px;
+}
+
+.visuallyhidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}

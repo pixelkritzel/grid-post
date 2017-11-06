@@ -43,7 +43,7 @@ class App extends React.Component {
               <uiStore.OverlayContent />
             </Overlay>
           ) : null}
-          <DevTools />
+          {process.env.NODE_ENV === 'development' && <DevTools />}
         </div>
       </div>
     );
