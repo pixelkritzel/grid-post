@@ -5,10 +5,20 @@
   "homepage": "./",
   "main": "electron-src/electron-starter.js",
   "dependencies": {
-    "@types/react-icon-base": "^2.0.4",
-    "bootstrap": "4.0.0-beta.2",
     "cors": "^2.8.4",
     "express": "^4.15.4",
+    "shelljs": "^0.7.8"
+  },
+  "devDependencies": {
+    "bootstrap": "4.0.0-beta.2",
+    "@types/bootstrap": "^3.3.36",
+    "@types/cors": "^2.8.1",
+    "@types/express": "^4.0.38",
+    "@types/react": "^16.0.18",
+    "@types/react-dom": "^16.0.2",
+    "@types/react-icon-base": "^2.0.4",
+    "@types/shelljs": "^0.7.5",
+    "electron": "^1.8.1",
     "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
     "mobx-state-tree": "^0.11.0",
@@ -17,16 +27,6 @@
     "react-dom": "^16.0.0",
     "react-icon-base": "^2.1",
     "react-scripts-ts": "2.5.0",
-    "shelljs": "^0.7.8"
-  },
-  "devDependencies": {
-    "@types/bootstrap": "^3.3.36",
-    "@types/cors": "^2.8.1",
-    "@types/express": "^4.0.38",
-    "@types/react": "^16.0.18",
-    "@types/react-dom": "^16.0.2",
-    "@types/shelljs": "^0.7.5",
-    "electron": "^1.8.1",
     "mobx-react-devtools": "^4.2.15",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2"
