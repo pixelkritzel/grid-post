@@ -26,7 +26,7 @@
     "@types/react": "^16.0.18",
     "@types/react-dom": "^16.0.2",
     "@types/shelljs": "^0.7.5",
-    "electron": "^1.6.11",
+    "electron": "^1.8.1",
     "mobx-react-devtools": "^4.2.15",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2"
