@@ -6,7 +6,9 @@
   "main": "electron-src/electron-starter.js",
   "dependencies": {
     "cors": "^2.8.4",
+    "electron": "^1.8.1",
     "express": "^4.15.4",
+    "pretty": "^2.0.0",
     "shelljs": "^0.7.8"
   },
   "devDependencies": {
@@ -18,11 +20,9 @@
     "@types/react-dom": "^16.0.2",
     "@types/react-icon-base": "^2.0.4",
     "@types/shelljs": "^0.7.5",
-    "electron": "^1.8.1",
     "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
     "mobx-state-tree": "^0.11.0",
-    "pretty": "^2.0.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-icon-base": "^2.1",
@@ -37,7 +37,7 @@
       "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && react-scripts build",
+    "build": "npm run build-css && react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "electron": "node_modules/.bin/electron .",
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
