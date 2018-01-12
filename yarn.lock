@@ -72,7 +72,7 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react-icon-base@^2.0.4":
+"@types/react-icon-base@2.0.4":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/react-icon-base/-/react-icon-base-2.0.4.tgz#2e5f10e116ed8757fd51368c623bf01f272ef817"
   dependencies:
@@ -4724,7 +4724,7 @@ react-error-overlay@^1.0.6:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
-react-icon-base@^2.1:
+react-icon-base@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.1.1.tgz#ec5cd5f5797f29102581693d0ae9a739e3e586c2"
 
