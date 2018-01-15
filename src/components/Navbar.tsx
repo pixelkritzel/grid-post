@@ -26,6 +26,30 @@ class Navbar extends React.Component {
     }
   };
 
+  newProject = () => {
+    appStore.ui.OverlayContent = () => (
+      <div>
+        <p>You will loose any unsaved progress. Do you want to continue?</p>
+        <hr />
+        <div className="text-right">
+          <button type="button" className="btn btn-default" onClick={() => (appStore.ui.OverlayContent = null)}>
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => {
+              newProject();
+              appStore.ui.OverlayContent = null;
+            }}
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   saveProject = () => {
     if (appStore.ui.projectPath) {
       saveStore(appStore.ui.projectPath);
@@ -51,7 +75,7 @@ class Navbar extends React.Component {
         </a>
         <ul className="navbar-nav">
           <li className="nav-item">
-            <button type="button" className="nav-link btn btn-link" onClick={newProject}>
+            <button type="button" className="nav-link btn btn-link" onClick={this.newProject}>
               New
             </button>
           </li>
