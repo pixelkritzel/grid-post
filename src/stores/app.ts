@@ -12,6 +12,7 @@ export enum Mode {
 
 type appStoreType = {
   data: DataStoreType;
+  isDataStoreDirty: boolean;
   ui: uiStoreType;
   exportDirectory: string | null;
   mode: Mode;
@@ -21,6 +22,7 @@ const initalDataStore = DataStoreModel.create(emptyDataStore);
 
 const appStore: appStoreType = observable({
   data: initalDataStore,
+  isDataStoreDirty: false,
   ui: uiStore,
   exportDirectory: null,
   mode: Mode.DEV,
@@ -37,8 +39,15 @@ function sendResourcesToServer() {
     electron.ipcRenderer.sendSync('resources', JSON.stringify(appStore.data.resources))
   );
 }
-onPatch(appStore.data, sendResourcesToServer);
-sendResourcesToServer();
+
+function registerOnPatches() {
+  onPatch(appStore.data, sendResourcesToServer);
+  onPatch(appStore.data, () => {
+    appStore.isDataStoreDirty = true;
+  });
+}
+
+registerOnPatches();
 
 function saveStore(savePath: string) {
   fs.writeFile(savePath, JSON.stringify(appStore.data, undefined, 2), (err: {}) => {
@@ -47,6 +56,8 @@ function saveStore(savePath: string) {
       console.log(err);
     } else {
       console.log('savedStore');
+      appStore.ui.projectPath = savePath;
+      appStore.isDataStoreDirty = false;
     }
   });
 }
@@ -68,7 +79,8 @@ function loadStore(loadPath: string) {
       appStore.ui.projectPath = loadPath;
       const newDataStore = DataStoreModel.create(loadedStore);
       appStore.data = newDataStore;
-      onPatch(appStore.data, sendResourcesToServer);
+      appStore.isDataStoreDirty = false;
+      registerOnPatches();
       sendResourcesToServer();
     }
   });
@@ -79,6 +91,7 @@ function newProject() {
   const newDataStore = DataStoreModel.create(emptyDataStore);
   appStore.data = newDataStore;
   appStore.ui.projectPath = null;
+  appStore.isDataStoreDirty = false;
   onPatch(appStore.data, sendResourcesToServer);
 }
 export { newProject };

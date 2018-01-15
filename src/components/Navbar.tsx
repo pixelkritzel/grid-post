@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 import exportProject from '../export-project';
 import electronRequire from '../helpers/electron-require';
@@ -6,6 +7,8 @@ import electronRequire from '../helpers/electron-require';
 const { dialog } = electronRequire('electron').remote;
 
 import appStore, { loadStore, newProject, saveStore } from '../stores/app';
+
+@observer
 class Navbar extends React.Component {
   exportProject = () => {
     const dialogResult: string[] | undefined = dialog.showOpenDialog({
@@ -27,27 +30,31 @@ class Navbar extends React.Component {
   };
 
   newProject = () => {
-    appStore.ui.OverlayContent = () => (
-      <div>
-        <p>You will loose any unsaved progress. Do you want to continue?</p>
-        <hr />
-        <div className="text-right">
-          <button type="button" className="btn btn-default" onClick={() => (appStore.ui.OverlayContent = null)}>
-            Cancel
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => {
-              newProject();
-              appStore.ui.OverlayContent = null;
-            }}
-          >
-            Continue
-          </button>
+    if (appStore.isDataStoreDirty) {
+      appStore.ui.OverlayContent = () => (
+        <div>
+          <p>You will loose any unsaved progress. Do you want to continue?</p>
+          <hr />
+          <div className="text-right">
+            <button type="button" className="btn btn-default" onClick={() => (appStore.ui.OverlayContent = null)}>
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => {
+                newProject();
+                appStore.ui.OverlayContent = null;
+              }}
+            >
+              Continue
+            </button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      newProject();
+    }
   };
 
   saveProject = () => {
@@ -90,7 +97,12 @@ class Navbar extends React.Component {
             </button>
           </li>
           <li className="nav-item">
-            <button type="button" className="nav-link btn btn-link" onClick={this.saveProject}>
+            <button
+              type="button"
+              className="nav-link btn btn-link"
+              disabled={!appStore.isDataStoreDirty}
+              onClick={this.saveProject}
+            >
               Save
             </button>
           </li>

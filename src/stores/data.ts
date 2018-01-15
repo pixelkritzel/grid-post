@@ -40,8 +40,5 @@ export const DataStoreModel = types
       removeResource
     };
   });
-// onPatch(dataStore, () => {
-//   const stringifiedStore = JSON.stringify(dataStore);
-//   localStorage.setItem('latest', stringifiedStore);
-// });
+
 export type DataStoreType = typeof DataStoreModel.Type;
