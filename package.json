@@ -6,7 +6,7 @@
   "main": "electron-src/electron-starter.js",
   "dependencies": {
     "cors": "^2.8.4",
-    "electron": "^1.8.1",
+    "electron": "^1.8.2-beta.4",
     "express": "^4.15.4",
     "pretty": "^2.0.0",
     "shelljs": "^0.7.8"
